@@ -16,7 +16,7 @@ let name = 'Жан';
 let age = '18';
 alert('Я ' + name + ' мне ' + age + '.');
 function timeCounter() {
-    const SEC_IN_HOUR = 60;
+    const SEC_IN_HOUR = 3600;
     const secInDay = SEC_IN_HOUR * 24;
     const secInMonth = secInDay * 30;
     console.log('sec in hour ' + SEC_IN_HOUR);
