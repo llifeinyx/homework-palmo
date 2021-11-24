@@ -1,31 +1,30 @@
-// let num = 10;
-// console.log(num);
-// let first = 5;
-// let second = 10;
-// console.log(first + second);
-// console.log(first - second);
-// console.log(first * second);
-// console.log(first / second);
-// let bar = 20;
-// let qwerty = 5;
-// let res = bar - qwerty - 10;
-// let end = res - qwerty;
-// let str = 'Hello, Palmo.';
-// alert(str);
-// let name = 'Жан';
-// let age = '18';
-// alert('Я ' + name + ' мне ' + age + '.');
-// function timeCounter() {
-//     const SEC_IN_HOUR = 3600;
-//     const secInDay = SEC_IN_HOUR * 24;
-//     const secInMonth = secInDay * 30;
-//     console.log('sec in hour ' + SEC_IN_HOUR);
-//     console.log('sec in day ' + secInDay);
-//     console.log('sec in month ' + secInMonth);
+// let login = prompt('Введите логин:');
+// if (login === 'admin' ){
+//     if (prompt('Введите пароль:') === 'qwerty123'){
+//         alert('Добро пожаловать!');
+//     }
+//     else{
+//         alert('Неправильный пароль');
+//     }
 // }
-// timeCounter();
-// let number = 5;
-// number = Math.pow(number, 2);
-// let d = 8;
-// let n = Math.pow(d, 2);
-// let x = Math.pow(d, 3);
+// else {
+//     alert('Неправильный логин');
+// }
+//Пример работы условных операторов if, else.
+function ex1(){
+    let password;
+    let login = prompt('Введите логин:');
+    if (login !== 'admin' ){
+        alert('Неправильный логин');
+    }
+    if (login === 'admin'){
+        password = prompt('Введите пароль');
+    }
+    if (password === 'qwerty123'){
+        alert('Добро пожаловать!');
+    }
+    if (password !== 'qwerty123'){
+        alert('Неправильный пароль.');
+    }
+}
+//Версия без вложенных условий (более читаемая).
