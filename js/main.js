@@ -2,7 +2,7 @@
 function getUserCountry(){
     let userAnswerRight = true;
     while (userAnswerRight){
-        let userCountry = prompt('Где вы живете?');
+        const userCountry = prompt('Где вы живете?');
         //console.log(userCountry);
         //console.log(typeof  Number(userCountry));
         //console.log(Number(userCountry));
@@ -66,7 +66,12 @@ function enterNumber1(){
 enterNumber1();
 // 5. ex
 function numericCycle1(){
-    for (let i = 1; i <= 500; i++){
+    label: for (let i = 1; i <= 500; i++){
+        for (let j = 2; j < i; j++){
+            if (i % j === 0){
+                continue label;
+            }
+        }
         console.log(i);
     }
 }
