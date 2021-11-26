@@ -70,7 +70,7 @@ function numericCycle1(){
         console.log(i);
     }
 }
-//numericCycle1();
+numericCycle1();
 // 6. ex
 function numericCycle2(){
     for (let i = 1000; i >= 300; i--){
