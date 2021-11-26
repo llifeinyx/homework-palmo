@@ -66,7 +66,7 @@ function enterNumber1(){
 enterNumber1();
 // 5. ex
 function numericCycle1(){
-    label: for (let i = 1; i <= 500; i++){
+    label: for (let i = 2; i <= 500; i++){
         for (let j = 2; j < i; j++){
             if (i % j === 0){
                 continue label;
