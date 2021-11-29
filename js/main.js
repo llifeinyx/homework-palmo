@@ -56,7 +56,7 @@ userValue= {
     name1: 200,
     name2: 500,
     name3: 400
-}
+};
 function sumObjProperties(obj) {
     return obj.name1 + obj.name2 + obj.name3;
 }
@@ -104,7 +104,7 @@ quizAnswers = [
     'a8',
     'a9',
     'a10'
-]
+];
 function userAnswerTreatment(i) {
     let userAnswer;
     let rightAnswer = true;
