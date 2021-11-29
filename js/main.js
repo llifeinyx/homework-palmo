@@ -123,17 +123,130 @@ console.log(namesFromObjects(
 ));
 //ex 9
 function treatmentArray(arr) {
-    for (let i of arr){
-        console.log(i);
-        if(typeof i === 'number'){
-            i *= 2;
-            console.log(i);
+    for (let i = 0; i < arr.length; i++){
+        if (typeof arr[i] === 'number'){
+            arr[i] *= 2;
         }
-        if(typeof i === 'string'){
-            i = i.split();
-            console.log(i);
+        if (typeof arr[i] === 'string'){
+            arr[i] = arr[i].split('');
         }
     }
+    console.log(arr);
     return arr;
 }
+//debug
 console.log(treatmentArray([2, 'str of my life']));
+//ex 10
+function antiSpam(str) {
+    let arr = str.split(' ');
+    for (let i = 0; i < arr.length; i++){
+        for (let j = 0; j < arr.length; j++){
+            if (i !== j && arr[i] === arr[j]){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+//debug
+console.log(antiSpam('Spam Spam bla la'));
+//ex 11
+let badWordsArr = [
+    'nword',
+    'fword'
+]
+function antiBadWords(str) {
+    let arr = str.split(' ');
+    for (let i of arr){
+        if (badWordsArr.includes(i)){
+            return true
+        }
+    }
+    return false;
+}
+//debug
+console.log(antiBadWords('nword lol'));
+//ex 12
+function arrayToSentence(arr) {
+    let str = '';
+    for (let i of arr){
+        if (typeof i === 'string'){
+            str += i;
+        }
+    }
+    return str;
+}
+//debug
+console.log(arrayToSentence(['word1',10,'word2']));
+//ex 13
+function createPhoneNumber(numbers){
+    let format = '(xxx) xxx-xxxx';
+
+    for (number of numbers) {
+        format = format.replace('x', number);
+    }
+
+    return format;
+}
+//debug
+console.log(createPhoneNumber(
+    [3, 8, 0, 8, 2, 4, 5, 5, 9, 1]
+));
+//ex 14
+function getHighestSalary(users) {
+    let maxSalary = users[0].salary;
+    for (let i of users){
+        if (i.salary > maxSalary){
+            maxSalary = i.salary;
+        }
+    }
+    return maxSalary;
+}
+//debug
+console.log(getHighestSalary(
+   [
+       {
+           salary: 1500
+       },
+       {
+           salary: 1700
+       },
+       {
+           salary: 1300
+       }
+   ]
+));
+//ex 15
+function rightStr(str){
+    return str.length >= 3 && str.length <= 16 && str &&
+        !(
+            str.includes('1') ||
+            str.includes('2') ||
+            str.includes('3') ||
+            str.includes('4') ||
+            str.includes('5') ||
+            str.includes('6') ||
+            str.includes('7') ||
+            str.includes('8') ||
+            str.includes('9') ||
+            str.includes('0')
+        );
+}
+//debug
+console.log(rightStr('stoka'));
+//ex 16
+function rightPassword(str) {
+    let hasUpperCase = false;
+    let hasNumber = false;
+    for (let i of str){
+        if (i.toUpperCase() === i && (i <= '0' || i >= '9')){
+            hasUpperCase = true;
+        }
+        if (i >= '0' && i <= '9'){
+            hasNumber = true;
+        }
+    }
+    return hasUpperCase && hasNumber && str.length >= 6;
+}
+//debug
+console.log(rightPassword('Aacs22133'));
