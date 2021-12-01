@@ -1,0 +1,35 @@
+h1 {
+    text-align: center;
+}
+
+.container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid darkorange;
+    border-radius: 10px;
+}
+
+.add-student{
+    margin-top: 30px;
+}
+
+#danger-alert, #success-alert {
+    display: none;
+}
+
+.student-list {
+    margin-top: 30px;
+}
+
+.student-list ul {
+    text-align: center;
+}
+
+.random-btn-block {
+    margin-top: 30px;
+}
+
+.is-random-student {
+    background-color: mediumvioletred !important;
+    border: 2px solid darkred !important;
+}

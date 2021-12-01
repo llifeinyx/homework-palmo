@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Student</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="сss/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <h1>Random Student</h1>
+    <div class="d-flex justify-content-center add-student">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-student-modal">
+            Добавить студента
+        </button>
+    </div>
+    <div class="student-list d-flex justify-content-center">
+        <ul class="list-group" id="student-list">
+            <li class="list-group-item">asdadadadad</li>
+            <li class="list-group-item">asdadadadad</li>
+            <li class="list-group-item">asdadadadad</li>
+            <li class="list-group-item">asdadadadad</li>
+            <li class="list-group-item">asdadadadad</li>
+            <li class="list-group-item">asdadadadad</li>
+            <li class="list-group-item">asdadadadad</li>
+        </ul>
+    </div>
+    <div class="random-btn-block d-flex justify-content-center">
+        <button type="button" class="btn btn-info" id="random-btn">ВЫБРАТЬ СТУДЕНТА</button>
+    </div>
+</div>
+
+<!--modal form for adding student-->
+<div class="modal fade" id="add-student-modal" tabindex="-1" aria-labelledby="add-student-modal-label"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add-student-modal-label">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="alert alert-danger" role="alert" id="danger-alert"></div>
+                <div class="alert alert-success" role="alert" id="success-alert"></div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="student-name-input" class="form-label">Имя студента</label>
+                        <input type="text" class="form-control" id="student-name-input" name="student_name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" id="add-student-btn">Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="js/main.js"></script>
+</body>
+</html>
