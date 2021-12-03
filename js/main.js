@@ -1,5 +1,4 @@
 const addStudentBtn = document.querySelector('#add-student-btn');
-
 addStudentBtn.onclick = () => {
     document.getElementById('danger-alert').style.display = 'none';
     let student = document.getElementById('student-name-input').value
