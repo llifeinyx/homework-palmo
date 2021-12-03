@@ -168,34 +168,35 @@ function emailTreatment(str) {
     return str && dotCount === 1 && mailCount === 1;
 }
 function ageTreatment(str) {
-    // let ageError = document.createElement('span');
-    // if (!str){
-    //     if (ex10.children.item(2).lastElementChild.tagName === 'SPAN'){
-    //         ex10.children.item(2).lastElementChild.remove();
-    //     }
-    //     ageError.innerText = ' Пустая строка ';
-    //     ex10.children.item(2).append(ageError);
-    //     document.getElementById('user-email').style.border = '1px solid red';
-    // }
-    // if (isNaN(+str)){
-    //     if (ex10.children.item(2).lastElementChild.tagName === 'SPAN'){
-    //         ex10.children.item(2).lastElementChild.remove();
-    //     }
-    //     ageError.innerText = ' Вы ввели не число ';
-    //     ex10.children.item(2).append(ageError);
-    //     document.getElementById('user-email').style.border = '1px solid red';
-    // }
-    // if (+str < 0){
-    //     if (ex10.children.item(2).lastElementChild.tagName === 'SPAN'){
-    //         ex10.children.item(2).lastElementChild.remove();
-    //     }
-    //     ageError.innerText = ' Возраст не может быть отрицательным ';
-    //     ex10.children.item(2).append(ageError);
-    //     document.getElementById('user-email').style.border = '1px solid red';
-    // }
+    let ageError = document.createElement('span');
+    if (!str){
+        if (ex10.children.item(2).lastElementChild.tagName === 'SPAN'){
+            ex10.children.item(2).lastElementChild.remove();
+        }
+        ageError.innerText = ' Пустая строка ';
+        ex10.children.item(2).append(ageError);
+        document.getElementById('user-age').style.border = '1px solid red';
+    }
+    if (isNaN(+str)){
+        if (ex10.children.item(2).lastElementChild.tagName === 'SPAN'){
+            ex10.children.item(2).lastElementChild.remove();
+        }
+        ageError.innerText = ' Вы ввели не число ';
+        ex10.children.item(2).append(ageError);
+        document.getElementById('user-age').style.border = '1px solid red';
+    }
+    if (+str < 0){
+        if (ex10.children.item(2).lastElementChild.tagName === 'SPAN'){
+            ex10.children.item(2).lastElementChild.remove();
+        }
+        ageError.innerText = ' Возраст не может быть отрицательным ';
+        ex10.children.item(2).append(ageError);
+        document.getElementById('user-age').style.border = '1px solid red';
+    }
     return str && !isNaN(+str) && +str > 0;
 }
 function passwordTreatment(str) {
+    let passwordError = document.createElement('span');
     let hasUpperCase = false;
     let hasNumber = false;
     for (let i of str){
@@ -206,9 +207,42 @@ function passwordTreatment(str) {
             hasNumber = true;
         }
     }
+    if (!hasNumber){
+        if (ex10.children.item(3).lastElementChild.tagName === 'SPAN'){
+            ex10.children.item(3).lastElementChild.remove();
+        }
+        passwordError.innerText = ' Пароль должен содержать минимум одну цифру ';
+        ex10.children.item(3).append(passwordError);
+        document.getElementById('user-password').style.border = '1px solid red';
+    }
+    if (!hasUpperCase){
+        if (ex10.children.item(3).lastElementChild.tagName === 'SPAN'){
+            ex10.children.item(3).lastElementChild.remove();
+        }
+        passwordError.innerText = ' Пароль должен содержать минимум одну заглавную букву ';
+        ex10.children.item(3).append(passwordError);
+        document.getElementById('user-password').style.border = '1px solid red';
+    }
+    if (str.length < 6){
+        if (ex10.children.item(3).lastElementChild.tagName === 'SPAN'){
+            ex10.children.item(3).lastElementChild.remove();
+        }
+        passwordError.innerText = ' Пароль должен быть больше 6 символов ';
+        ex10.children.item(3).append(passwordError);
+        document.getElementById('user-password').style.border = '1px solid red';
+    }
     return hasUpperCase && hasNumber && str.length >= 6;
 }
 function repeatPasswordTreatment(str1, str2) {
+    let passwordRepeatError = document.createElement('span');
+    if (str1 !== str2 && !str1 || !str2){
+        if (ex10.children.item(4).lastElementChild.tagName === 'SPAN'){
+            ex10.children.item(4).lastElementChild.remove();
+        }
+        passwordRepeatError.innerText = ' Вы неправильно повторили пароль ';
+        ex10.children.item(4).append(passwordRepeatError);
+        document.getElementById('user-repeat-password').style.border = '1px solid red';
+    }
     return str1 === str2;
 }
 btnForRegistration.onclick = () => {
@@ -217,17 +251,83 @@ btnForRegistration.onclick = () => {
     let userAgeStr = document.getElementById('user-age').value;
     let userPasswordStr = document.getElementById('user-password').value;
     let userRepeatPasswordStr = document.getElementById('user-repeat-password').value;
-    //console.log(loginTreatment(userLoginStr));
-    //console.log(emailTreatment(userEmailStr));
+    loginTreatment(userLoginStr);
+    emailTreatment(userEmailStr);
+    ageTreatment(userAgeStr);
+    passwordTreatment(userPasswordStr);
+    repeatPasswordTreatment(userPasswordStr, userRepeatPasswordStr);
     if (loginTreatment(userLoginStr) && emailTreatment(userEmailStr) && ageTreatment(userAgeStr) &&
         passwordTreatment(userPasswordStr) && repeatPasswordTreatment(userPasswordStr, userRepeatPasswordStr)){
         document.querySelector('.ex10 > p').innerText = 'Регистрация прошла успешно';
         document.getElementById('user-login').value = '';
+        document.getElementById('user-login').style.border = '1px solid black';
+        if (ex10.children.item(0).lastElementChild.tagName === 'SPAN'){
+            ex10.children.item(0).lastElementChild.remove();
+        }
         document.getElementById('user-email').value = '';
+        document.getElementById('user-email').style.border = '1px solid black';
+        if (ex10.children.item(1).lastElementChild.tagName === 'SPAN'){
+            ex10.children.item(1).lastElementChild.remove();
+        }
         document.getElementById('user-age').value = '';
+        document.getElementById('user-age').style.border = '1px solid black';
+        if (ex10.children.item(2).lastElementChild.tagName === 'SPAN'){
+            ex10.children.item(2).lastElementChild.remove();
+        }
         document.getElementById('user-password').value = '';
+        document.getElementById('user-password').style.border = '1px solid black';
+        if (ex10.children.item(3).lastElementChild.tagName === 'SPAN'){
+            ex10.children.item(3).lastElementChild.remove();
+        }
         document.getElementById('user-repeat-password').value = '';
+        document.getElementById('user-repeat-password').style.border = '1px solid black';
+        if (ex10.children.item(4).lastElementChild.tagName === 'SPAN'){
+            ex10.children.item(4).lastElementChild.remove();
+        }
     } else {
         document.querySelector('.ex10 > p').innerText = 'Некорректный ввод';
     }
+}
+const calcBtnNumResult = document.getElementById('num-=');
+const calcInput = document.getElementById('result-area');
+let clearResult = false;
+function calcBtn(btnValue) {
+    if (clearResult === true){
+        calcInput.value = '';
+        clearResult = false;
+    }
+    calcInput.value += btnValue;
+}
+calcBtnNumResult.onclick = () => {
+    try {
+        calcInput.value = eval(calcInput.value);
+    }
+    catch (e){
+        calcInput.value = 'Ошибка ввода';
+    }
+    if (calcInput.value === 'Infinity' || calcInput.value === '-Infinity'){
+        calcInput.value = 'Деление на ноль невозможно';
+    }
+    clearResult = true;
+}
+const openModalBtn = document.getElementById('open-modal');
+openModalBtn.onclick = () => {
+    if (document.querySelector('.modal').classList.contains('active')){
+        document.querySelector('.modal').classList.remove('active');
+        openModalBtn.innerText = 'Открыть корзину';
+    } else {
+        document.querySelector('.modal').classList.add('active');
+        openModalBtn.innerText = 'Закрыть корзину';
+    }
+}
+const modalList = document.querySelector('.modal > ul');
+function addItemToList(item){
+    const itemName = item.querySelector('h1').innerText;
+    const newLi = document.createElement('li');
+    newLi.innerText = itemName;
+    modalList.append(newLi);
+}
+const btnClear = document.getElementById('clear-modal-items');
+btnClear.onclick = () => {
+    modalList.textContent ='';
 }

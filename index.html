@@ -85,6 +85,83 @@
             <button type="button" id="btn-for-registration">Зарегистрироваться</button>
         </form>
     </div>
+    <div class="ex11">
+        <p>ex 11</p>
+        <div class="calculate-panel">
+            <input type="text" id="result-area" readonly>
+            <div class="calculate-menu">
+                <button id="num-1" onclick="calcBtn(this.innerText)">
+                    1
+                </button>
+                <button id="num-2" onclick="calcBtn(this.innerText)">
+                    2
+                </button>
+                <button id="num-3" onclick="calcBtn(this.innerText)">
+                    3
+                </button>
+                <button id="num-4" onclick="calcBtn(this.innerText)">
+                    4
+                </button>
+                <button id="num-5" onclick="calcBtn(this.innerText)">
+                    5
+                </button>
+                <button id="num-6" onclick="calcBtn(this.innerText)">
+                    6
+                </button>
+                <button id="num-7" onclick="calcBtn(this.innerText)">
+                    7
+                </button>
+                <button id="num-8" onclick="calcBtn(this.innerText)">
+                    8
+                </button>
+                <button id="num-9" onclick="calcBtn(this.innerText)">
+                    9
+                </button>
+                <button id="num-0" onclick="calcBtn(this.innerText)">
+                    0
+                </button>
+                <button id="num-+" onclick="calcBtn(this.innerText)">
+                    +
+                </button>
+                <button id="num--" onclick="calcBtn(this.innerText)">
+                    -
+                </button>
+                <button id="num-*" onclick="calcBtn(this.innerText)">
+                    *
+                </button>
+                <button id="num-/" onclick="calcBtn(this.innerText)">
+                    /
+                </button>
+                <button id="num-=">
+                    =
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="ex12">
+        <p>ex12</p>
+        <div class="catalog-menu" id="catalogMenu">
+            <div class="catalog-item">
+                <h1>Товар 1</h1>
+                <button onclick="addItemToList(this.closest('div'))">Добавить в корзину</button>
+            </div>
+            <div class="catalog-item">
+                <h1>Товар 2</h1>
+                <button onclick="addItemToList(this.closest('div'))">Добавить в корзину</button>
+            </div>
+            <div class="catalog-item">
+                <h1>Товар 3</h1>
+                <button onclick="addItemToList(this.closest('div'))">Добавить в корзину</button>
+            </div>
+        </div>
+        <div class="modal">
+            <ul>
+
+            </ul>
+            <button id="clear-modal-items">Очистить корзину</button>
+        </div>
+        <button id="open-modal">В корзину</button>
+    </div>
 </div>
 <script src="js/main.js"></script>
 </body>

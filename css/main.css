@@ -15,4 +15,46 @@
   background-color: green;
 }
 
+.calculate-panel input {
+  width: 600px;
+}
+
+.calculate-menu {
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+}
+
+.catalog-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 250px);
+}
+
+.catalog-item {
+  width: 200px;
+  height: 140px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+.catalog-item h1 {
+  text-align: center;
+}
+.catalog-item button {
+  display: flex;
+  margin: 0 auto;
+}
+
+.modal {
+  border: 1px solid black;
+  width: 300px;
+  height: 400px;
+  display: none;
+  top: 20vh;
+  left: 50vw;
+  position: fixed;
+}
+
+.active {
+  display: block;
+}
+
 /*# sourceMappingURL=main.css.map */
