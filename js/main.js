@@ -175,6 +175,10 @@ function addItem(){
      brand: itemBrandValue,
      id: itemId
  };
+ document.getElementById('itemName').value = '';
+ document.getElementById('select-color').value = '';
+ document.getElementById('itemCost').value = '';
+ document.getElementById('select-brand').value = '';
  sessionStorage.setItem(`${itemId}`, JSON.stringify(item));
  showItem(JSON.stringify(item));
 }
@@ -231,7 +235,9 @@ function filterByName() {
             continue;
         }
         const item = JSON.parse(sessionStorage.getItem(`${key}`));
-        if (item.name === itemNameValue){
+        const itemName = item.name.slice(0, itemNameValue.length);
+        console.log(itemName);
+        if (itemName === itemNameValue){
             showItem(sessionStorage.getItem(`${key}`));
         }
     }
