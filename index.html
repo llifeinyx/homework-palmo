@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="add-item-menu">
+        <button onclick="closeAddItemMenu()">Закрыть</button>
+        <div class="item-name">
+            <p>Введите название товара:<br>(Название товара уникальное <br> и без пробелов)</p>
+            <input id='itemName' type="text">
+        </div>
+        <div class="item-color">
+            <p>Выберите цвет товара:</p>
+            <select id="select-color">
+                <option value="red">Красный</option>
+                <option value="blue">Синий</option>
+                <option value="green">Зеленый</option>
+            </select>
+        </div>
+        <div class="item-cost">
+            <p>Введите цену товара:</p>
+            <input id="itemCost" type="text">
+        </div>
+        <div class="item-brand">
+            <p>Выберите бренд товара</p>
+            <select  id="select-brand">
+                <option value="bmv">bmv</option>
+                <option value="iPhone">iPhone</option>
+                <option value="abibas">abibas</option>
+            </select>
+        </div>
+        <button onclick="addItem()">Добавить товар</button>
+    </div>
+    <div class="change-item-menu">
+        <button onclick="closeChangeItemMenu()">Закрыть</button>
+        <div class="item-name">
+            <p>Введите название товара:<br>(Название товара уникальное)</p>
+            <input id='changeItemName' type="text">
+        </div>
+        <div class="item-color">
+            <p>Выберите цвет товара:</p>
+            <select id="changeSelect-color">
+                <option value="red">Красный</option>
+                <option value="blue">Синий</option>
+                <option value="green">Зеленый</option>
+            </select>
+        </div>
+        <div class="item-cost">
+            <p>Введите цену товара:</p>
+            <input id="changeItemCost" type="text">
+        </div>
+        <div class="item-brand">
+            <p>Выберите бренд товара</p>
+            <select  id="changeSelect-brand">
+                <option value="bmv">bmv</option>
+                <option value="iPhone">iPhone</option>
+                <option value="abibas">abibas</option>
+            </select>
+        </div>
+        <button onclick="changeItemData()">Изменить товар</button>
+    </div>
+    <header>
+        <div class="header-container">
+            <div class="btn-block">
+                <button onclick="openAddItemMenu()">Добавить товар</button>
+            </div>
+            <div class="btn-block">
+                <button onclick="clearItems()">Очистить склад</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="main-container">
+            <h1>Товары на складе:</h1>
+            <div class="item-storage">
+                <div class="item-filter">
+                    <p>Сортировать по цвету:</p>
+                    <select id="select-color-filter">
+                        <option value="all">все</option>
+                        <option value="red">красный</option>
+                        <option value="blue">синий</option>
+                        <option value="green">зеленый</option>
+                    </select>
+                    <p>Сортировать по цене</p>
+                    <div class="filter-cost">
+                        <span>От</span>
+                        <input id="lower-cost-border" type="text">
+                        <span>До</span>
+                        <input id="upper-cost-border" type="text">
+                    </div>
+                    <p>Сортировать по бренду</p>
+                    <select id="select-brand-filter">
+                        <option value="all">все</option>
+                        <option value="bmv">bmv</option>
+                        <option value="iPhone">iPhone</option>
+                        <option value="abibas">abibas</option>
+                    </select>
+                    <p>
+                        <button onclick="filter()">Отсортировать</button>
+                    </p>
+                    <p>Искать по имени <br>(Ищет исключительно по названию товара) </p>
+                    <input id="name-filter" type="text">
+                    <p>
+                        <button onclick="filterByName()">Искать по имени</button>
+                    </p>
+                </div>
+                <div class="item-menu">
+
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="js/main.js"></script>
+</body>
+</html>
