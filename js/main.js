@@ -1,3 +1,37 @@
+function sortByCostUp(){
+    const tempItemArr = [];
+    for (let key in sessionStorage){
+        if (!sessionStorage.hasOwnProperty(key)) {
+            continue;
+        }
+        tempItemArr.push(JSON.parse(sessionStorage.getItem(`${key}`)));
+    }
+    tempItemArr.sort(function(a, b) {
+        return parseFloat(a.cost) - parseFloat(b.cost);
+    });
+    document.querySelector('.item-menu').textContent = '';
+    for (let key of tempItemArr){
+        showItem(JSON.stringify(key));
+    }
+}
+
+function sortByCostDown() {
+    const tempItemArr = [];
+    for (let key in sessionStorage){
+        if (!sessionStorage.hasOwnProperty(key)) {
+            continue;
+        }
+        tempItemArr.push(JSON.parse(sessionStorage.getItem(`${key}`)));
+    }
+    tempItemArr.sort(function(a, b) {
+        return parseFloat(b.cost) - parseFloat(a.cost);
+    });
+    document.querySelector('.item-menu').textContent = '';
+    for (let key of tempItemArr){
+        showItem(JSON.stringify(key));
+    }
+}
+
 function getObjectFromItem(item) {
     let itemName = item.querySelector('p').innerText;
     let tempArray = itemName.split(' ');
@@ -176,9 +210,9 @@ function addItem(){
      id: itemId
  };
  document.getElementById('itemName').value = '';
- document.getElementById('select-color').value = '';
+ //document.getElementById('select-color').value = '';
  document.getElementById('itemCost').value = '';
- document.getElementById('select-brand').value = '';
+ //document.getElementById('select-brand').value = '';
  sessionStorage.setItem(`${itemId}`, JSON.stringify(item));
  showItem(JSON.stringify(item));
 }
