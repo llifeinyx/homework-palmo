@@ -12,13 +12,50 @@
 </head>
 
 <body style="margin: 0;">
-
-<!-- Add your site or application content here -->
-<main style="display: flex; justify-content:center; margin-top: 25px;">
-    <img src="palmo.jpg" alt="">
-</main>
+<form name="feedback" method="POST" action="form.php" enctype="multipart/form-data">
+    <label>Ваше имя: <input type="text" name="name"></label>
+    <label>Ваш email: <input type="text" name="email"></label>
+    <label>Аватарка: <input type="file" name="avatar"></label>
+    <input type="submit" name="send" value="Отправить">
+</form>
 <?php
-    phpinfo();
+    //ex 1
+    function numIn($num, $pow){
+        return intval($num) ** intval($pow);
+    }
+    echo numIn(3, 9), "<br>";
+    //ex 2
+    function numToWeek($num){
+        $weekDay = ['пон', 'вт','ср' ,'чт','пт','сб','вс'];
+        if ((int)$num < 0 || (int)$num > 7){
+            return 'Некорректный ввод';
+        }
+        return $weekDay[$num];
+    }
+    echo numToWeek(4), "<br>";
+    //ex 3
+    function slug($str){
+        return str_replace(' ', '-', mb_strtolower(trim($str)));
+    }
+    echo slug('Hello palmo'), "<br>";
+    //ex 4
+    $products = [
+        ['name' => 'Телевизор', 'prise' => '400', 'quantity' => 1],
+        ['name' => 'Телефон', 'prise' => '300', 'quantity' => 3],
+        ['name' => 'Кроссовки', 'prise' => '150', 'quantity' => 2]
+    ];
+    function sumAndCount($arr)
+    {
+        $fullPrice = 0;
+        $fullQuantity = 0;
+        foreach ($arr as $i) {
+            $fullPrice += intval($i['prise']);
+            $fullQuantity += intval($i['quantity']);
+        }
+        //echo $fullPrice, ' ', $fullQuantity, "<br>";
+        return [$fullPrice, $fullQuantity];
+    }
+    echo sumAndCount($products)[0], ' ', sumAndCount($products)[1] , "<br>";
 ?>
 </body>
 
