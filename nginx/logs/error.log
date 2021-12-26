@@ -133,6 +133,16 @@
 2021/12/23 16:32:29 [notice] 1#1: worker process 31 exited with code 0
 2021/12/23 16:32:29 [notice] 1#1: worker process 32 exited with code 0
 2021/12/23 16:32:29 [notice] 1#1: exit
+2021/12/23 18:19:22 [notice] 1#1: using the "epoll" event method
+2021/12/23 18:19:22 [notice] 1#1: nginx/1.21.0
+2021/12/23 18:19:22 [notice] 1#1: built by gcc 10.2.1 20201203 (Alpine 10.2.1_pre1) 
+2021/12/23 18:19:22 [notice] 1#1: OS: Linux 5.11.0-43-generic
+2021/12/23 18:19:22 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2021/12/23 18:19:22 [notice] 1#1: start worker processes
+2021/12/23 18:19:22 [notice] 1#1: start worker process 32
+2021/12/23 18:19:22 [notice] 1#1: start worker process 33
+2021/12/23 18:19:22 [notice] 1#1: start worker process 34
+2021/12/23 18:19:22 [notice] 1#1: start worker process 35
 2021/12/24 17:41:22 [notice] 1#1: using the "epoll" event method
 2021/12/24 17:41:22 [notice] 1#1: nginx/1.21.0
 2021/12/24 17:41:22 [notice] 1#1: built by gcc 10.2.1 20201203 (Alpine 10.2.1_pre1) 
@@ -215,3 +225,13 @@
 2021/12/24 19:17:07 [notice] 1#1: signal 17 (SIGCHLD) received from 40
 2021/12/24 19:17:07 [notice] 1#1: worker process 40 exited with code 0
 2021/12/24 19:17:07 [notice] 1#1: exit
+2021/12/25 23:40:25 [notice] 1#1: using the "epoll" event method
+2021/12/25 23:40:25 [notice] 1#1: nginx/1.21.0
+2021/12/25 23:40:25 [notice] 1#1: built by gcc 10.2.1 20201203 (Alpine 10.2.1_pre1) 
+2021/12/25 23:40:25 [notice] 1#1: OS: Linux 5.11.0-43-generic
+2021/12/25 23:40:25 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2021/12/25 23:40:25 [notice] 1#1: start worker processes
+2021/12/25 23:40:25 [notice] 1#1: start worker process 33
+2021/12/25 23:40:25 [notice] 1#1: start worker process 34
+2021/12/25 23:40:25 [notice] 1#1: start worker process 35
+2021/12/25 23:40:25 [notice] 1#1: start worker process 36
