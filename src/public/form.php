@@ -26,6 +26,7 @@ function hasNumInStr($str){
             return true;
         }
     }
+    return false;
 }
 
 function isCorrectString($str, $MODE = 'STRICT'){
@@ -66,11 +67,11 @@ if (isset($_POST) && isset($_POST['send2Form'])){
         print("Загружен файл с именем " .$file['name'] . " и размером " . $file['size'] . " байт");
 
         $current_path = $_FILES['imageItem']['tmp_name'];
-        //$filename = $_FILES['imageItem']['name'];
-        //$new_path = dirname(__FILE__) . '/uploads/' . $filename;
-        //$file_path = 'uploads/' . $filename;
-        //move_uploaded_file($current_path, $new_path);
-        //echo "<img src='{$file_path}' alt='itemImage'>";
+        $filename = $_FILES['imageItem']['name'];
+        $new_path = dirname(__FILE__) . '/uploads/' . $filename;
+        $file_path = 'uploads/' . $filename;
+        move_uploaded_file($current_path, $new_path);
+        echo "<img src='{$file_path}' alt='itemImage'>";
     }
 }
 //var_dump($_POST);
