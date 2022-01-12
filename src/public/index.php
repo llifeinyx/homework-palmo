@@ -17,30 +17,77 @@ $_SESSION['userData'] = json_encode($userData);
 </head>
 
 <body style="margin: 0;">
-<form  class="first-form" name="feedback" method="POST" action="form.php" enctype="multipart/form-data">
-    <h1>ФОРМА</h1>
-    <label>
-        Введите логин:
-        <input type="text" name="username" value="<?php
-        if (isset($_COOKIE['userTemp'])){
-            echo json_decode($_COOKIE['userTemp'])->username;
-        } else {
-            echo "";
+<h1>Q1</h1>
+<?php
+$file1 = fopen('text.txt', 'w+');
+fwrite($file1, 'Hello Palmo');
+//$txt = fread($file1, filesize('text.txt'));
+$txt = file_get_contents('text.txt');
+//var_dump($txt);
+echo $txt . "<br>";
+echo stat('text.txt')['size'] . ' размер в байтах ' . "<br>";
+echo (stat('text.txt')['size']/1000) . ' размер в мегабайтах ' . "<br>";
+echo (stat('text.txt')['size']/10000) . ' размер в гигабайтах ' . "<br>";
+$file2 = fopen('text2.txt', 'w+');
+unlink('text2.txt');
+
+function dirOrFile($dirOrFile){
+    if (is_dir($dirOrFile)){
+        return 'is dir';
+    } elseif(is_file($dirOrFile)) {
+        return "is file";
+    } else {
+        return 'wtf';
+    }
+}
+
+$dirNameArr = ['text1', 'text2', 'text3'];
+if (!file_exists('Test')){
+    mkdir('Test', 0777);
+}
+foreach ($dirNameArr as $name){
+    if (!file_exists('Test/' . $name)){
+        mkdir(('Test/' . $name), 0777);
+    }
+    $fileTmp = fopen('Test/' . $name . '/Hello.txt', 'w+');
+    fwrite($fileTmp, 'Hello Palmo!');
+    echo file_get_contents('Test/' . $name . '/Hello.txt');
+}
+    echo dirOrFile('jjjjjjjjjjj') . "<br>";
+
+    function printFileFromDir($mainDirPath){
+        $sumFile = 0;
+        $scanDir = scandir($mainDirPath);
+        foreach ($scanDir as $dir){
+            if ($dir === '.' || $dir === '..'){
+                continue;
+            }
+            if (is_file($mainDirPath . '/' . $dir)){
+                $sumFile += filesize($mainDirPath . '/' . $dir);
+            } elseif(is_dir($mainDirPath . '/' . $dir)) {
+                $sumFile += printFileFromDir($mainDirPath . '/' . $dir);
+            }
         }
-        ?>">
-    </label>
-    <label>
-        Введите пароль:
-        <input type="text" name="password" value="<?php
-        if (isset($_COOKIE['userTemp'])){
-            echo json_decode($_COOKIE['userTemp'])->password;
-        } else {
-            echo "";
+        return $sumFile;
+    }
+    function deleteNahoy($mainDirPath){
+        $scanDir = scandir($mainDirPath);
+        foreach ($scanDir as $dir){
+            if ($dir === '.' || $dir === '..'){
+                continue;
+            }
+            if (is_file($mainDirPath . '/' . $dir)){
+                unlink($mainDirPath . '/' . $dir);
+            } elseif(is_dir($mainDirPath . '/' . $dir)) {
+                deleteNahoy($mainDirPath . '/' . $dir);
+                //echo
+                rmdir($mainDirPath . '/' . $dir);
+            }
         }
-        ?>">
-    </label>
-    <input type="submit" name="send1Form" value="Отправить форму">
-</form>
+    }
+    echo printFileFromDir('Test');
+    deleteNahoy('Test');
+?>
 </body>
 
 </html>
