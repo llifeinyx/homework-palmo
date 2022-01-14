@@ -1,7 +1,10 @@
 <?php
 session_start();
-$userData = ["username" => 'Jason', "password" => 'parker'];
-$_SESSION['userData'] = json_encode($userData);
+if (isset($_SESSION['exist'])){
+    if ($_SESSION['exist'] === true){
+        echo "<a href='home.php'><button>Войти</button></a><br>";
+    }
+}
 ?>
 <!doctype html>
 <html class="no-js" lang="">
@@ -17,30 +20,9 @@ $_SESSION['userData'] = json_encode($userData);
 </head>
 
 <body style="margin: 0;">
-<form  class="first-form" name="feedback" method="POST" action="form.php" enctype="multipart/form-data">
-    <h1>ФОРМА</h1>
-    <label>
-        Введите логин:
-        <input type="text" name="username" value="<?php
-        if (isset($_COOKIE['userTemp'])){
-            echo json_decode($_COOKIE['userTemp'])->username;
-        } else {
-            echo "";
-        }
-        ?>">
-    </label>
-    <label>
-        Введите пароль:
-        <input type="text" name="password" value="<?php
-        if (isset($_COOKIE['userTemp'])){
-            echo json_decode($_COOKIE['userTemp'])->password;
-        } else {
-            echo "";
-        }
-        ?>">
-    </label>
-    <input type="submit" name="send1Form" value="Отправить форму">
-</form>
+<h1>РЕГИСТРАЦИЯ/АВТОРИЗАЦИЯ</h1>
+<a href="registration.php"><button>Зарегестрироваться</button></a>
+<a href="loginin.php"><button>Авторизироваться</button></a>
 </body>
 
 </html>
