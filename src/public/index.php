@@ -1,8 +1,3 @@
-<?php
-//session_start();
-//$userData = ["username" => 'Jason', "password" => 'parker'];
-//$_SESSION['userData'] = json_encode($userData);
-?>
 <!doctype html>
 <html class="no-js" lang="">
 
@@ -17,73 +12,122 @@
 </head>
 
 <body style="margin: 0;">
-<!--<form action="home.php" enctype="multipart/form-data" method="post">-->
-<!--    <h1>ФОРМА ДЛЯ ЗАГРУЗКИ ФАЙЛА</h1>-->
-<!--    <label for="file">Загрузите файл формата txt:</label>-->
-<!--    <input type="file" id="file" name="file" accept=".txt" required>-->
-<!--    <input type="submit" value="отправить" name="send_file">-->
-<!--</form>-->
-
 <?php
-    class Calc{
-        protected $n1;
-        protected $n2;
-        public function __construct($n1, $n2)
-        {
-            $this->n1 = $n1;
-            $this->n2 = $n2;
-        }
-        public function sum()
-        {
-            echo "Sum n=" , $this->n1 + $this->n2 , "<br>";
-        }
-        public function minus()
-        {
-            echo "Minus n=" ,$this->n1 - $this->n2 , "<br>";
-        }
-        public function multiply()
-        {
-            return $this->n1 * $this->n2;
-        }
-        public function delenie()
-        {
-            echo "delenie n=" , $this->n1 / $this->n2 , "<br>";
-        }
-    }
-    $lol = new Calc(4, 2);
-    $lol->sum();
-    $lol->minus();
-    $lol->multiply();
-    $lol->delenie();
 
+//main interface
+interface JSONDecode
+{
+    public function setJSONString($JSONString);
+    public function getJSONString();
+    public function printJSONObject();
+}
 
-    class Worker{
-        public $name;
-        public $age;
-        public $salary;
+//main abstract class decorator from interface
+abstract class JSONDecodeDecorator implements JSONDecode
+{
+    protected $JSONDecodeDecorated;
+    public function __construct(JSONDecode $JSONDecodeDecorated)
+    {
+        $this->JSONDecodeDecorated = $JSONDecodeDecorated;
     }
-    $obj1 = new Worker();
-    $obj1->name = 'Иван';
-    $obj1->age = 25;
-    $obj1->salary = 1000;
-    $obj2 = new Worker();
-    $obj2->name = 'Вася';
-    $obj2->age = 26;
-    $obj2->salary = 2000;
-    echo $obj1->salary + $obj2->salary, "<br>";
-    echo $obj1->age + $obj2->age, "<br>";
-    class Pow extends Calc{
-        public function __construct($n1, $n2)
-        {
-            parent::__construct($n1, $n2);
-        }
-        public function pow()
-        {
-            echo 'ultra pow=' , $this->multiply() * $this->multiply(), "<br>";
+    public function setJSONString($JSONString)
+    {
+        $this->JSONDecodeDecorated->setJSONString($JSONString);
+    }
+    public function getJSONString()
+    {
+        $this->JSONDecodeDecorated->getJSONString();
+    }
+
+    public function printJSONObject()
+    {
+        $this->JSONDecodeDecorated->printJSONObject();
+    }
+}
+
+//class decorator from interface
+class JSONDecodeExtendedInfoDecorator extends JSONDecodeDecorator
+{
+    public function __construct(JSONDecode $JSONDecodeDecorated)
+    {
+        parent::__construct($JSONDecodeDecorated);
+    }
+    private function printJSONString()
+    {
+        echo $this->JSONDecodeDecorated->getJSONString() . "<br>";
+    }
+    public function printJSONObject()
+    {
+        $this->printJSONString();
+        $this->JSONDecodeDecorated->printJSONObject();
+    }
+}
+
+//class from interface 1
+class formatJSONObjectMedium implements JSONDecode
+{
+    protected $JSONObject;
+    public function setJSONString($JSONString)
+    {
+        $this->JSONObject = json_decode($JSONString, true);
+    }
+    public function getJSONString()
+    {
+        return json_encode($this->JSONObject);
+    }
+
+    public function printJSONObject()
+    {
+        foreach ($this->JSONObject as $key => $item){
+            echo $key . ": " . $item . "<br>";
         }
     }
-    $lf = new Pow(2, 3);
-    $lf->pow();
+}
+
+//clas from interface 2
+class formatJSONObjectLarge implements JSONDecode
+{
+    protected $JSONObject;
+    public function setJSONString($JSONString)
+    {
+        $this->JSONObject = json_decode($JSONString, false);
+    }
+    public function getJSONString()
+    {
+        return json_encode($this->JSONObject);
+    }
+    public function printJSONObject()
+    {
+        var_dump($this->JSONObject);
+        echo "<br>";
+    }
+}
+
+/* test object */
+$someObj = ['key1' => 'olo', 'key2' => 'lol', 'key3' => 'ool', 'key4' => 'llo'];
+
+//functional default formatJSONObjectMedium class
+echo "<br>" . "FIRST EXAMPLE" . "<br>";
+$formatJMDefault = new formatJSONObjectMedium();
+$formatJMDefault->setJSONString(json_encode($someObj));
+$formatJMDefault->printJSONObject();
+
+//functional decorated formatJSONObjectMedium class
+echo "<br>" . "SECOND EXAMPLE" . "<br>";
+$formatJMDecorated = new JSONDecodeExtendedInfoDecorator($formatJMDefault);
+$formatJMDecorated->printJSONObject();
+
+//functional default formatJSONObjectLarge class
+echo "<br>" . "THIRD EXAMPLE" . "<br>";
+$formatJLDefault = new formatJSONObjectLarge();
+$formatJLDefault->setJSONString(json_encode($someObj));
+$formatJLDefault->printJSONObject();
+
+//functional decorated formatJSONObjectLarge class
+echo "<br>" . "FOUR EXAMPLE" . "<br>";
+$formatJLDecorated = new JSONDecodeExtendedInfoDecorator($formatJLDefault);
+$formatJLDecorated->printJSONObject();
+
 ?>
 </body>
 
