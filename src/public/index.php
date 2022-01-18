@@ -25,65 +25,90 @@
 <!--</form>-->
 
 <?php
-    class Calc{
-        protected $n1;
-        protected $n2;
-        public function __construct($n1, $n2)
-        {
-            $this->n1 = $n1;
-            $this->n2 = $n2;
-        }
-        public function sum()
-        {
-            echo "Sum n=" , $this->n1 + $this->n2 , "<br>";
-        }
-        public function minus()
-        {
-            echo "Minus n=" ,$this->n1 - $this->n2 , "<br>";
-        }
-        public function multiply()
-        {
-            return $this->n1 * $this->n2;
-        }
-        public function delenie()
-        {
-            echo "delenie n=" , $this->n1 / $this->n2 , "<br>";
-        }
-    }
-    $lol = new Calc(4, 2);
-    $lol->sum();
-    $lol->minus();
-    $lol->multiply();
-    $lol->delenie();
+function printFigure(Figure $figureObj){
+    echo 'Фигура: ' . $figureObj->getType() . ', площадь: ' . $figureObj->findS() . ', периметр: '
+        . $figureObj->findP() . "<br>";
+}
 
+class Figure
+{
+    protected $type;
+    public function getType()
+    {
+        return $this->type;
+    }
+    public function findS()
+    {
 
-    class Worker{
-        public $name;
-        public $age;
-        public $salary;
     }
-    $obj1 = new Worker();
-    $obj1->name = 'Иван';
-    $obj1->age = 25;
-    $obj1->salary = 1000;
-    $obj2 = new Worker();
-    $obj2->name = 'Вася';
-    $obj2->age = 26;
-    $obj2->salary = 2000;
-    echo $obj1->salary + $obj2->salary, "<br>";
-    echo $obj1->age + $obj2->age, "<br>";
-    class Pow extends Calc{
-        public function __construct($n1, $n2)
-        {
-            parent::__construct($n1, $n2);
-        }
-        public function pow()
-        {
-            echo 'ultra pow=' , $this->multiply() * $this->multiply(), "<br>";
-        }
+    public function findP()
+    {
+
     }
-    $lf = new Pow(2, 3);
-    $lf->pow();
+}
+class Square extends Figure
+{
+    protected $side;
+    public function __construct($side)
+    {
+        $this->type = 'Квадрат';
+        $this->side = $side;
+    }
+    public function findS()
+    {
+        return $this->side * $this->side;
+    }
+    public function findP()
+    {
+        return $this->side * 4;
+    }
+}
+class Triangle extends Figure
+{
+    protected $side1;
+    protected $side2;
+    protected $side3;
+    public function __construct($side1, $side2, $side3)
+    {
+        $this->type = 'Треугольник';
+        $this->side1 = $side1;
+        $this->side2 = $side2;
+        $this->side3 = $side3;
+    }
+    public function findS()
+    {
+        return 1.56 * ($this->side1+$this->side2+$this->side3);
+    }
+    public function findP()
+    {
+        return $this->side1 + $this->side2 + $this->side3;
+    }
+}
+class Circle extends Figure
+{
+    protected $radius;
+    public function __construct($radius)
+    {
+        $this->type = 'Круг';
+        $this->radius = $radius;
+    }
+    public function findS()
+    {
+        return $this->radius * $this->radius * 3.14152;
+    }
+    public function findP()
+    {
+        return $this->radius * 3.14152;
+    }
+}
+$mySquare = new Square(4);
+$myTriangle = new Triangle(6, 4, 3);
+$myCircle = new Circle(5);
+
+printFigure($mySquare);
+printFigure($myTriangle);
+printFigure($myCircle);
+
 ?>
 </body>
 
