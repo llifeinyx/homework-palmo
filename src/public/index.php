@@ -25,89 +25,132 @@
 <!--</form>-->
 
 <?php
-function printFigure(Figure $figureObj){
-    echo 'Фигура: ' . $figureObj->getType() . ', площадь: ' . $figureObj->findS() . ', периметр: '
-        . $figureObj->findP() . "<br>";
+include 'news/page.php';
+include 'blog/page.php';
+
+use \blog\Page as BlogPage;
+use \news\Page as NewsPage;
+
+$lol1 = new BlogPage();
+$lol1->load();
+$lol2 = new NewsPage();
+$lol2->load();
+
+abstract class User
+{
+    protected $name;
+
+    abstract public function showRole();
+
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
+    public function getName(){
+        return $this->name;
+    }
+    public function setName($name){
+        $this->name = $name;
+    }
+
 }
 
-class Figure
+class Admin extends User
 {
-    protected $type;
-    public function getType()
+    public function showRole()
     {
-        return $this->type;
+        return 'admin';
     }
-    public function findS()
+}
+class Visitor extends User
+{
+    public function showRole()
     {
+        return 'visitor';
+    }
+}
+$userAdmin = new Admin('Zhan');
+$userVisitor = new Visitor('Boyko');
+echo $userAdmin->showRole() . "<br>";
+echo $userVisitor->showRole() . "<br>";
 
+interface Cauntable
+{
+    public function count();
+}
+class Sum implements Cauntable
+{
+    protected $x;
+    protected $y;
+    public function __construct($x, $y){
+        $this->x = $x;
+        $this->y = $y;
     }
-    public function findP()
+    public function count()
     {
+        return $this->x + $this->y;
+    }
+}
+class Multiply implements Cauntable
+{
+    protected $x;
+    protected $y;
+    public function __construct($x, $y){
+        $this->x = $x;
+        $this->y = $y;
+    }
+    public function count()
+    {
+        return $this->x * $this->y;
+    }
+}
 
-    }
-}
-class Square extends Figure
-{
-    protected $side;
-    public function __construct($side)
-    {
-        $this->type = 'Квадрат';
-        $this->side = $side;
-    }
-    public function findS()
-    {
-        return $this->side * $this->side;
-    }
-    public function findP()
-    {
-        return $this->side * 4;
-    }
-}
-class Triangle extends Figure
-{
-    protected $side1;
-    protected $side2;
-    protected $side3;
-    public function __construct($side1, $side2, $side3)
-    {
-        $this->type = 'Треугольник';
-        $this->side1 = $side1;
-        $this->side2 = $side2;
-        $this->side3 = $side3;
-    }
-    public function findS()
-    {
-        return 1.56 * ($this->side1+$this->side2+$this->side3);
-    }
-    public function findP()
-    {
-        return $this->side1 + $this->side2 + $this->side3;
-    }
-}
-class Circle extends Figure
-{
-    protected $radius;
-    public function __construct($radius)
-    {
-        $this->type = 'Круг';
-        $this->radius = $radius;
-    }
-    public function findS()
-    {
-        return $this->radius * $this->radius * 3.14152;
-    }
-    public function findP()
-    {
-        return $this->radius * 3.14152;
-    }
-}
-$mySquare = new Square(4);
-$myTriangle = new Triangle(6, 4, 3);
-$myCircle = new Circle(5);
+$sum = new Sum(4, 5);
+$mul = new Multiply(4, 5);
+echo 'Сумма: ' , $sum->count(), "<br>";
+echo 'Произвдение: ' , $mul->count(), "<br>";
 
-printFigure($mySquare);
-printFigure($myTriangle);
-printFigure($myCircle);
+interface ArrayCrudInterface
+{
+    public function create($arr);
+    public function read($i);
+    public function update($item);
+    public function delete($i);
+}
+class ArrayCrud implements ArrayCrudInterface
+{
+    public $arr;
+    public function create($arr)
+    {
+        $this->arr = $arr;
+    }
+    public function read($i)
+    {
+        return $this->arr[$i];
+    }
+    public function update($item)
+    {
+        array_push($this->arr, $item);
+    }
+    public function delete($i)
+    {
+        unset($this->arr[$i]);
+    }
+}
+$arrCrad = new ArrayCrud();
+$arrCrad->create([1, 2, 3]);
+var_dump($arrCrad->arr);
+echo "<br>";
+echo "Элемент по индексу ", 2, ": ",$arrCrad->read(2), "<br>";
+$arrCrad->update(4);
+var_dump($arrCrad->arr);
+echo "<br>";
+$arrCrad->delete(3);
+var_dump($arrCrad->arr);
+echo "<br>";
+
+
+
 
 ?>
 </body>
