@@ -17,6 +17,12 @@
 </head>
 
 <body style="margin: 0;">
+<div>
+    <a href="addNews.php">Добавить новость</a>
+</div>
+<div>
+    <a href="newsList.php">Посмотреть новости</a>
+</div>
 <!--<form action="home.php" enctype="multipart/form-data" method="post">-->
 <!--    <h1>ФОРМА ДЛЯ ЗАГРУЗКИ ФАЙЛА</h1>-->
 <!--    <label for="file">Загрузите файл формата txt:</label>-->
@@ -25,6 +31,7 @@
 <!--</form>-->
 
 <?php
+/*
 include 'news/page.php';
 include 'blog/page.php';
 
@@ -147,8 +154,9 @@ var_dump($arrCrad->arr);
 echo "<br>";
 $arrCrad->delete(3);
 var_dump($arrCrad->arr);
-echo "<br>";
+echo "<br>";*/
 
+//EXAM
 
 
 
