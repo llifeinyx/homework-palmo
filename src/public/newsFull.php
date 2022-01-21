@@ -1,6 +1,8 @@
 <?php
-$cookiesName = array_search('подробнее', $_POST);
-$newsArray = json_decode($_COOKIE[$cookiesName], true);
+$idPost = array_search('подробнее', $_POST);
+$allNewsArray = json_decode($_COOKIE['news-array'], true);
+$key = array_search($idPost, array_column($allNewsArray, 'id'));
+$newsArray = $allNewsArray[$key];
 ?>
 <!doctype html>
 <html lang="en">

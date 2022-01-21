@@ -2,7 +2,7 @@
 class NewsPost {
     private $newsData = [];
     public function __construct($newsData){
-        $this->newsData = json_decode($newsData, true);
+        $this->newsData = $newsData;
     }
 
     public function printNewsPost(){
@@ -18,7 +18,10 @@ class NewsPost {
         echo "</form>";
     }
 }
-foreach ($_COOKIE as $item){
-    $newsItem = new NewsPost($item);
-    $newsItem->printNewsPost();
+if (isset($_COOKIE['news-array'])){
+    $tmpArray = json_decode($_COOKIE['news-array'], true);
+    foreach ($tmpArray as $item){
+        $newsItem = new NewsPost($item);
+        $newsItem->printNewsPost();
+    }
 }

@@ -1,6 +1,10 @@
 <?php
 //Обрабатываем новость
 if (isset($_POST)){
+    if (!isset($_COOKIE['news-array'])){
+        $news_array = [];
+        setcookie('news-array',json_encode($news_array));
+    }
     $trueValidation = true;
 
     $name = htmlspecialchars(trim($_POST['name']));
@@ -50,8 +54,8 @@ if (isset($_POST)){
     if (!$newsFilePath || $fileType->getExtension() !== 'jpg'){
         $trueValidation = false;
     }
-    if ($trueValidation === false || isset($_COOKIE[$name])){
-        setcookie('error', 'Ошибки при заполнении формы или название новости не уникальное');
+    if ($trueValidation === false){
+        setcookie('error', 'Ошибки при заполнении формы');
         header('Location:addNews.php');
     } else {
         $filename = $_FILES['news-file']['name'];
@@ -64,7 +68,9 @@ if (isset($_POST)){
             'news-text' =>$newsText, 'news-filepath' => $file_path, 'news-author' => $newsAuthor, 'id' => $cookieNameTmp];
         setcookie('error', '', time() - 3600, '/');
         $newsString = json_encode($newsArray);
-        setcookie($cookieNameTmp, $newsString);
+        $thisCookieObj = json_decode($_COOKIE['news-array'], true);
+        array_push($thisCookieObj, $newsArray);
+        setcookie('news-array', json_encode($thisCookieObj));
         header('Location:index.php');
     }
 }
