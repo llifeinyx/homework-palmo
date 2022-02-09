@@ -2842,3 +2842,7 @@
 172.21.0.1 - - [07/Feb/2022:20:01:22 +0200] "GET /tasks/5 HTTP/1.1" 404 6622 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36" "-"
 172.21.0.1 - - [07/Feb/2022:20:01:34 +0200] "GET /tasks/5 HTTP/1.1" 500 16866 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36" "-"
 172.21.0.1 - - [07/Feb/2022:20:02:22 +0200] "GET /tasks/234 HTTP/1.1" 500 16889 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36" "-"
+172.20.0.1 - - [09/Feb/2022:16:54:43 +0200] "GET / HTTP/1.1" 200 351 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36" "-"
+172.20.0.1 - - [09/Feb/2022:16:54:57 +0200] "GET /tasks/12 HTTP/1.1" 500 16888 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36" "-"
+172.20.0.1 - - [09/Feb/2022:16:55:01 +0200] "GET /tasks/cdfgkdortfkghp HTTP/1.1" 500 16899 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36" "-"
+172.20.0.1 - - [09/Feb/2022:16:56:01 +0200] "GET /tasks HTTP/1.1" 200 31 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36" "-"
