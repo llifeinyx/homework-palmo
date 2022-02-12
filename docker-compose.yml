@@ -20,11 +20,49 @@ services:
       - work
 
   php:
-    image: php:8.1-fpm-alpine3.15
+    build:
+      context: ./php-fpm
+      dockerfile: Dockerfile
     container_name: php-work
     environment:
       TZ: Europe/Kiev
     volumes:
       - ./src:/var/www/src
+    networks:
+      - work
+
+  mysql:
+    image: mysql:5.7.29
+    container_name: mysql-work
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3307:3306"
+    volumes:
+        - ./mysql:/var/lib/mysql
+    environment:
+      TZ: Europe/Kiev
+      MYSQL_DATABASE: palmo
+      MYSQL_USER: palmo
+      MYSQL_PASSWORD: palmo
+      MYSQL_ROOT_PASSWORD: palmo
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - work
+
+  artisan:
+    build:
+      context: ./php-cli
+      dockerfile: Dockerfile
+    container_name: artisan-work
+    environment:
+      TZ: Europe/Kiev
+    volumes:
+      - ./src:/var/www/src
+    depends_on:
+      - mysql
+    working_dir: /var/www/src
+    entrypoint: ["php", "/var/www/src/artisan"]
     networks:
       - work
