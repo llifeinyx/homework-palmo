@@ -1,0 +1,10 @@
+.header-container{
+    display: flex;
+}
+.header-logo img{
+    width: 15%;
+    height: 15%;
+}
+button{
+    background-color: red;
+}

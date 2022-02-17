@@ -146,7 +146,7 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
-
+    'number' => 'The :attribute must be phone number',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes

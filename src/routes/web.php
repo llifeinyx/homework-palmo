@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +18,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-Route::get('/fastsale', [MainPageController::class, 'index'])->name('main');
-Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
-Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
+Route::get('/', [MainPageController::class, 'index'])->name('main');
+
+Route::group([
+    'as' => 'items.',
+    'prefix' => 'items',
+    'middleware' => 'auth'
+], function () {
+    Route::get('/', [ItemController::class, 'index'])->name('index');
+    Route::get('/create', [ItemController::class, 'create'])->name('create');
+    Route::post('/', [ItemController::class, 'store'])->name('store');
+    Route::get('/{item}', [ItemController::class, 'show'])->name('show');
+    Route::get('/{item}/edit', [ItemController::class, 'edit'])->name('edit');
+    Route::put('/{item}', [ItemController::class, 'update'])->name('update');
+    Route::delete('/{item}', [ItemController::class, 'destroy'])->name('destroy');
+});
+
+Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');
+
+
+
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

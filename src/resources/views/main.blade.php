@@ -1,1 +1,1 @@
-<h1>TEST</h1>
+@extends('layouts.main')
