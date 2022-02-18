@@ -47,4 +47,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Item::class);
     }
+    public function selectedItem(){
+        return $this->belongsToMany(Item::class, 'selected_items', 'user_id', 'item_id');
+    }
 }

@@ -25,10 +25,11 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="{{route('main')}}">lOX</a>
+            <a class="navbar-brand p-3" href="{{route('main')}}">lOX</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <a role="button" class="btn btn-primary" href="{{route('search.index')}}">Search items</a>
             <div>
                 @guest
                     <div>

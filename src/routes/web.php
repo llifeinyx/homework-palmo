@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MainPageController;
+use App\Http\Controllers\SearchPageController;
+use App\Http\Controllers\SelectedItemController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainPageController::class, 'index'])->name('main');
 
+Route::get('/selected_items/{item}', [SelectedItemController::class, 'index'])->name('selected_items.index');
+Route::delete('/selected_items/{item}', [SelectedItemController::class, 'destroy'])->name('selected_items.destroy');
+
 Route::group([
     'as' => 'items.',
     'prefix' => 'items',
@@ -34,8 +39,20 @@ Route::group([
     Route::delete('/{item}', [ItemController::class, 'destroy'])->name('destroy');
 });
 
-Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');
+Route::group([
+    'as' => 'search.',
+    'prefix' => 'search',
+], function () {
+    Route::get('/', [SearchPageController::class, 'index'])->name('index');
+    Route::get('/create', [SearchPageController::class, 'create'])->name('create');
+    Route::post('/', [SearchPageController::class, 'store'])->name('store');
+    Route::get('/{search}', [SearchPageController::class, 'show'])->name('show');
+    Route::get('/{search}/edit', [SearchPageController::class, 'edit'])->name('edit');
+    Route::put('/{search}', [SearchPageController::class, 'update'])->name('update');
+    Route::delete('/{search}', [SearchPageController::class, 'destroy'])->name('destroy');
+});
 
+Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');
 
 
 

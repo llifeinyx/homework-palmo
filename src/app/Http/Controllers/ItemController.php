@@ -21,6 +21,7 @@ class ItemController extends Controller
      *
      * @return View
      */
+
     public function index()
     {
         //return view('items.index');
@@ -46,7 +47,7 @@ class ItemController extends Controller
     public function store(ItemRequest $request)
     {
         $data = $request->except('_token');
-        $path = $request->file('inputAvatarItem')->store('images');
+        $path = $request->file('inputAvatarItem')->storePublicly('avatars', 'public');
 
         Item::create([
          'name' => $data['inputNameItem'],
@@ -65,22 +66,25 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View
      */
-    public function show($id)
+    public function show($id): View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $item = Item::find($id);
 
-        return view('items.show', ['item' => $item]);
+        return view('items.show', ['item' => $item, 'userId' => auth()->user()->getAuthIdentifier()]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View
      */
     public function edit($id)
     {
-        //
+        $item = Item::find($id);
+        $categories = Category::all();
+
+        return view('items.edit', ['item' => $item, 'categories' => $categories]);
     }
 
     /**
@@ -88,11 +92,23 @@ class ItemController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(ItemRequest $request, $id)
     {
-        //
+        $data = $request->except('_token', '_method');
+        $path = $request->file('inputAvatarItem')->storePublicly('avatars', 'public');
+        $item = Item::find($id);
+
+        $item->update([
+            'name' => $data['inputNameItem'],
+            'description' => $data['inputDescriptionItem'],
+            'cost' => $data['inputCostItem'],
+            'category_id' => $data['inputCategoryItem'],
+            'user_id' => auth()->user()->getAuthIdentifier(),
+            'avatar_path' => $path
+        ]);
+        return redirect()->route('profile');
     }
 
     /**
@@ -104,7 +120,7 @@ class ItemController extends Controller
     public function destroy($id)
     {
         $item = Item::find($id);
-        Storage::delete($item->avatar_path);
+        //Storage::delete($item->avatar_path);
         $item->delete();
 
         return redirect()->route('profile');
