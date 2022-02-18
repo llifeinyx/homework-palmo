@@ -44,12 +44,7 @@ Route::group([
     'prefix' => 'search',
 ], function () {
     Route::get('/', [SearchPageController::class, 'index'])->name('index');
-    Route::get('/create', [SearchPageController::class, 'create'])->name('create');
-    Route::post('/', [SearchPageController::class, 'store'])->name('store');
-    Route::get('/{search}', [SearchPageController::class, 'show'])->name('show');
-    Route::get('/{search}/edit', [SearchPageController::class, 'edit'])->name('edit');
-    Route::put('/{search}', [SearchPageController::class, 'update'])->name('update');
-    Route::delete('/{search}', [SearchPageController::class, 'destroy'])->name('destroy');
+    Route::post('/', [SearchPageController::class, 'update'])->name('update');
 });
 
 Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');

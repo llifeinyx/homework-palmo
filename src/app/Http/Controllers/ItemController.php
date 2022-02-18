@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ItemRequest;
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\SelectedItem;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -121,6 +122,11 @@ class ItemController extends Controller
     {
         $item = Item::find($id);
         //Storage::delete($item->avatar_path);
+        $selectedItems = SelectedItem::all()->where('item_id', '=', $id);
+
+        foreach ($selectedItems as $selectedItem){
+            $selectedItem->delete();
+        }
         $item->delete();
 
         return redirect()->route('profile');

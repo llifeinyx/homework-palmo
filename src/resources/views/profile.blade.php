@@ -32,8 +32,8 @@
             <div class="col">
                 <ul class="list-group">
                     <li class="list-group-item active">Chosen items</li>
-                    @if(\PHPUnit\Framework\isEmpty($userSelectedItems))
-                        <li class="list-group-item disable ">Clear</li>
+                    @if($userSelectedItems->isEmpty())
+                        <li class="list-group-item disabled">Clear</li>
                     @endif
                     @foreach($userSelectedItems as $userSelectedItem)
                         <li class="list-group-item list-group-item-action">

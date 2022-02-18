@@ -26,11 +26,14 @@
                         <div class="col">
                             <p class="card-text">Name: {{$item->user->name}}</p>
                         </div>
-                        <div class="col">
+                        <div class="col-4">
                             <p class="card-text">Phone number: {{$item->user->number}}</p>
                         </div>
                         <div class="col">
                             <p class="card-text">Cost: {{$item->cost}}</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="card-text">Category: {{$item->category->name}}</p>
                         </div>
                     </div>
                     <div class="row">
