@@ -67,7 +67,8 @@ Route::group([
 Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');
 
 Route::get('/admin', [AdminProfileController::class, 'index'])->name('admin');
-Route::put('/admin/{user}', [AdminProfileController::class, 'userBan'])->name('admin.userBan');
+Route::put('/admin/ban/{user}', [AdminProfileController::class, 'userBan'])->name('admin.userBan');
+Route::put('/admin/vip/{user}', [AdminProfileController::class, 'userVip'])->name('admin.userVip');
 Route::get('/ban', [HomeController::class, 'ban'])->name('ban');
 
 

@@ -71,7 +71,8 @@ class RegisterController extends Controller
             'number' => $data['number'],
             'password' => Hash::make($data['password']),
             'role_id' => '2',
-            'ban_status' => 'no'
+            'ban_status' => 'no',
+            'vip_status' => 0
         ]);
     }
 }

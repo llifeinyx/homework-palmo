@@ -11,17 +11,22 @@ class SearchPageController extends Controller
 {
     public function index()
     {
-        $items = Item::paginate(6);
+        $items = Item::query();
+        $items->join('users', 'items.user_id', '=', 'users.id')->orderBy('users.vip_status', 'desc');
+
         $categories = Category::all();
+
         $minCost = Item::all()->min('cost');
         $maxCost = Item::all()->max('cost');
 
-        return view('search.index', ['items' => $items, 'categories' => $categories, 'minCost' => $minCost, 'maxCost' => $maxCost]);
+        return view('search.index', ['items' =>$items->select('items.*')->paginate(6), 'categories' => $categories, 'minCost' => $minCost, 'maxCost' => $maxCost]);
     }
     public function update(SearchRequest $request)
     {
         $data = $request->except('_token', '_method');
         $items = Item::query();
+        $items->join('users', 'items.user_id', '=', 'users.id')->orderBy('users.vip_status', 'desc');
+
         $categories = Category::all();
 
         //name filter
@@ -48,7 +53,7 @@ class SearchPageController extends Controller
         $minCost = Item::all()->min('cost');
         $maxCost = Item::all()->max('cost');
 
-        return view('search.index', ['inputs' => $data, 'items' => $items->paginate(6), 'categories' => $categories, 'minCost' => $minCost, 'maxCost' => $maxCost]);
+        return view('search.index', ['inputs' => $data, 'items' => $items->select('items.*')->paginate(6), 'categories' => $categories, 'minCost' => $minCost, 'maxCost' => $maxCost]);
     }
 
 }

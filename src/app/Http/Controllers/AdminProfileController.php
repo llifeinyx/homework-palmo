@@ -41,5 +41,25 @@ class AdminProfileController extends Controller
         return back();
     }
 
+    public function userVip(Request $request, $id){
+
+        $vipAction = $request->input('vip_action');
+
+        $user = User::find($id);
+
+        if ($vipAction === 'vip'){
+            $user->update([
+                'vip_status' => 1
+            ]);
+        }
+        if ($vipAction === 'unvip'){
+            $user->update([
+                'vip_status' => 0
+            ]);
+        }
+
+        return back();
+    }
+
 
 }

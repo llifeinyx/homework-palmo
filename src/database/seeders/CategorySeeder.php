@@ -16,11 +16,11 @@ class CategorySeeder extends Seeder
     public function run()
     {
         DB::table('categories')->insert([
-            ['name' => 'Одежда'],
-            ['name' => 'Авто'],
-            ['name' => 'Электроника'],
-            ['name' => 'Недвижимость'],
-            ['name' => 'Обмен']
+            ['name' => 'Closet'],
+            ['name' => 'Car'],
+            ['name' => 'Smart'],
+            ['name' => 'Houses'],
+            ['name' => 'Trash']
         ]);
     }
 }
