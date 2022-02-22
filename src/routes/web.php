@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\SearchPageController;
@@ -47,7 +50,25 @@ Route::group([
     Route::post('/', [SearchPageController::class, 'update'])->name('update');
 });
 
+Route::group([
+    'as' => 'chats.',
+    'prefix' => 'chats',
+    'middleware' => 'auth'
+], function () {
+    Route::get('/', [ChatController::class, 'index'])->name('index');
+    Route::get('/create', [ChatController::class, 'create'])->name('create');
+    Route::post('/', [ChatController::class, 'store'])->name('store');
+    Route::get('/{chat}', [ChatController::class, 'show'])->name('show');
+    Route::get('/{chat}/edit', [ChatController::class, 'edit'])->name('edit');
+    Route::put('/{chat}', [ChatController::class, 'update'])->name('update');
+    Route::delete('/{chat}', [ChatController::class, 'destroy'])->name('destroy');
+});
+
 Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');
+
+Route::get('/admin', [AdminProfileController::class, 'index'])->name('admin');
+Route::put('/admin/{user}', [AdminProfileController::class, 'userBan'])->name('admin.userBan');
+Route::get('/ban', [HomeController::class, 'ban'])->name('ban');
 
 
 

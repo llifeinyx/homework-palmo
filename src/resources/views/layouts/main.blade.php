@@ -29,9 +29,6 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand p-3" href="{{route('main')}}">lOX</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
             <a role="button" class="btn btn-primary" href="{{route('search.index')}}">Search items</a>
             <div>
                 @guest
@@ -42,6 +39,10 @@
                 @else
                     <form class="form-inline my-2 my-lg-0" id="logout-form" action="{{ route('logout') }}" method="POST">
                         @csrf
+                        @if(\Illuminate\Support\Facades\Auth::user()->role->name === 'admin')
+                            <a role="button" class="btn btn-primary" href="{{route('admin')}}">Admin</a>
+                        @endif
+                        <a role="button" class="btn btn-primary" href="{{route('chats.index')}}">My chats</a>
                         <a role="button" class="btn btn-primary" href="{{route('profile')}}">My profile</a>
                         <input type="submit" class="btn btn-primary my-2 my-sm-0" value="Logout">
                     </form>

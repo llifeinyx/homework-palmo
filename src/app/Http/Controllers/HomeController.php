@@ -27,4 +27,7 @@ class HomeController extends Controller
         $categories = Category::all();
         return view('main', ['successRegistration' => true, 'categories' => $categories]);
     }
+    public function ban(){
+        return view('ban');
+    }
 }

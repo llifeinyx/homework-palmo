@@ -37,11 +37,21 @@
                         </div>
                     </div>
                     <div class="row">
-
+                        <div class="col">
+                            @if($userId !== $item->user_id)
+                                <a class="btn btn-primary" href="{{route('selected_items.index', ['item' => $item->id])}}">Add to cart</a>
+                            @endif
+                        </div>
+                        <div class="col">
+                            @if($role === 'admin')
+                                <form class="m-1" action="{{ route('items.destroy', ['item' => $item->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-info">Delete</button>
+                                </form>
+                            @endif
+                        </div>
                     </div>
-                    @if($userId !== $item->user_id)
-                        <a class="btn btn-primary" href="{{route('selected_items.index', ['item' => $item->id])}}">Add to cart</a>
-                    @endif
                 </div>
             </div>
         </div>

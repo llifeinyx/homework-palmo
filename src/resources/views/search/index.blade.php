@@ -10,17 +10,15 @@
                 range: true,
                 min: {{$minCost}},
                 max: {{$maxCost}},
-                values: [ 75, 300 ],
+                values: [ {{$minCost}}, {{$maxCost}} ],
                 slide: function( event, ui ) {
                     $( "#rangeItemCost" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
                     $( "#rangeItemCostMin" ).val(ui.values[ 0 ]);
                     $( "#rangeItemCostMax" ).val(ui.values[ 1 ]);
                 }
             });
-            // $( "#rangeItemCost1" ).val( "$" + $( "#sliderRangeItemCost" ).slider( "values", 0 ) +
-            //     " - $" + $( "#sliderRangeItemCost" ).slider( "values", 1 ) );
-            // $( "#rangeItemCost" ).val( "$" + $( "#sliderRangeItemCost" ).slider( "values", 0 ) +
-            //     " - $" + $( "#sliderRangeItemCost" ).slider( "values", 1 ) );
+            $( "#rangeItemCost" ).val( "$" + $( "#sliderRangeItemCost" ).slider( "values", 0 ) +
+                " - $" + $( "#sliderRangeItemCost" ).slider( "values", 1 ) );
         } );
     </script>
 @endsection
@@ -30,25 +28,25 @@
         <div class="row">
             <h1>List of items</h1>
         </div>
-        <div class="row" style="height: 35rem">
-            <div class="col-4">
+        <div class="row" style="height: 38rem">
+            <div class="col-4 border">
                 <form method="POST" action="{{route('search.update')}}">
                     @csrf
                     <legend>Filters:</legend>
                     <div class="mb-3 d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="inputNameItem">
+                        <input value="@if(isset($inputs['inputNameItem'])){{$inputs['inputNameItem']}}@endif" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="inputNameItem">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </div>
                     <div class="mb-3">
                         <div class="dropdown">
-                            <button class="btn btn-outline-secondary dropdown-toggle"role="button" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown">
                                 Choose categories:
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 @foreach($categories as $category)
                                 <li class="p-2 border-bottom">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked" name="{{'checkBoxCategoryId'.$category->id}}">
+                                        <input @if(isset($inputs['checkBoxCategoryId'.$category->id])){{'checked'}}@endif class="form-check-input" type="checkbox" value="true" id="flexCheckChecked" name="{{'checkBoxCategoryId'.$category->id}}">
                                         <label class="form-check-label">
                                             {{$category->name}}
                                         </label>
@@ -67,7 +65,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col">
+            <div class="col border">
                 <div class="row">
                     @foreach($items as $item)
                         <div class="card m-2" style="width: 14rem">

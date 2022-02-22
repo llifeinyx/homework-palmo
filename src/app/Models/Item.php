@@ -21,5 +21,9 @@ class Item extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+    public function selectedItem()
+    {
+        return $this->hasMany(SelectedItem::class, 'id');
+    }
 
 }

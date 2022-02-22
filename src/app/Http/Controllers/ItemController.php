@@ -9,6 +9,7 @@ use App\Models\SelectedItem;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
@@ -16,6 +17,7 @@ class ItemController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('ban');
     }
     /**
      * Display a listing of the resource.
@@ -70,8 +72,9 @@ class ItemController extends Controller
     public function show($id): View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $item = Item::find($id);
+        $user = Auth::user();
 
-        return view('items.show', ['item' => $item, 'userId' => auth()->user()->getAuthIdentifier()]);
+        return view('items.show', ['role' => $user->role->name, 'item' => $item, 'userId' => $user->id]);
     }
 
     /**
@@ -97,9 +100,14 @@ class ItemController extends Controller
      */
     public function update(ItemRequest $request, $id)
     {
+        $item = Item::find($id);
+
+        if(Auth::user()->getAuthIdentifier() !== $item->user_id){
+            return redirect()->route('profile');
+        }
+
         $data = $request->except('_token', '_method');
         $path = $request->file('inputAvatarItem')->storePublicly('avatars', 'public');
-        $item = Item::find($id);
 
         $item->update([
             'name' => $data['inputNameItem'],
@@ -121,13 +129,25 @@ class ItemController extends Controller
     public function destroy($id)
     {
         $item = Item::find($id);
+
+        $user = Auth::user();
+
+        if($user->id !== $item->user_id && $user->role->name !== 'admin'){
+            return redirect()->route('profile');
+        }
+
         //Storage::delete($item->avatar_path);
+
         $selectedItems = SelectedItem::all()->where('item_id', '=', $id);
 
         foreach ($selectedItems as $selectedItem){
             $selectedItem->delete();
         }
         $item->delete();
+
+        if ($user->role->name === 'admin'){
+            return redirect()->route('search.index');
+        }
 
         return redirect()->route('profile');
     }

@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email',
         'number',
         'password',
+        'role_id',
+        'ban_status'
     ];
 
     /**
@@ -49,5 +51,8 @@ class User extends Authenticatable
     }
     public function selectedItem(){
         return $this->belongsToMany(Item::class, 'selected_items', 'user_id', 'item_id');
+    }
+    public function role(){
+        return $this->belongsTo(Role::class);
     }
 }
