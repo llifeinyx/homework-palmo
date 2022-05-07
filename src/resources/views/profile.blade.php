@@ -43,7 +43,12 @@
                             <div class="row">
                                 <div class="d-flex">
                                     <a href="{{route('items.show', ['item' => $userSelectedItem->id])}}" class="m-1 btn btn-outline-success">Show</a>
-                                    <a href="#" class="m-1 btn btn-outline-warning">Chat with vendor</a>
+{{--                                    <a href="{{route('chats.check')}}" class="m-1 btn btn-outline-warning">Chat with vendor</a>--}}
+                                    <form action="{{route('chats.check')}}" method="POST" name="checkChatForm" id="checkChatForm">
+                                        @csrf
+                                        <input type="text" name="vendorId" id="vendorId" value="{{$userSelectedItem->user->id}}" hidden>
+                                        <button class="m-1 btn btn-outline-warning" type="submit">Chat with vendor</button>
+                                    </form>
                                     <form class="m-1" action="{{route('selected_items.destroy', ['item' => $userSelectedItem->id])}}" method="POST">
                                         @csrf
                                         @method('DELETE')

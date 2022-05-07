@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MessageRequest;
+use App\Models\Chat;
+use App\Models\Message;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -10,15 +15,57 @@ class ChatController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('ban');
+        //$this->middleware('chat');
     }
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
+    public function check(Request $request)
+    {
+        $data = $request->except('_token', '_method');
+
+        $vendor = User::find($data['vendorId']);
+        $vendee = User::find(Auth::id());
+
+        if (!$vendor){
+            return redirect()->route('profile');
+        }
+
+        // NEW SOLUTION
+        $chat_id = NULL;
+        $chat = NULL;
+
+        foreach ($vendee->chat as $chat1) {
+            foreach ($vendor->chat as $chat2){
+                //if exist
+                if ($chat1->id === $chat2->id){
+                    $chat_id = $chat1->id;
+                    break;
+                }
+            }
+        }
+
+        if(!$chat_id){
+            $chat = Chat::create(
+                [
+                    'vendor_id' => 1,
+                    'vendee_id' => 1,
+                ]);
+            $chat->user()->attach(User::find([$data['vendorId'], Auth::id()]));
+        } else{
+            $chat = Chat::find($chat_id);
+        }
+
+        return redirect()->route('chats.show', ['chat' => $chat->id]);
+    }
+
     public function index()
     {
-        return view('chats.index');
+        $user = User::find(Auth::id());
+
+        return view('chats.index', ['chats' => $user->chat]);
     }
 
     /**
@@ -46,31 +93,30 @@ class ChatController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show($id)
     {
-        //
+        $user = User::find(Auth::id());
+        $chat = Chat::find($id);
+
+        return view('chats.show', ['user' => $chat->user->where('id', '!=', $user->id),'chats' => $user->chat, 'id' => $id, 'chat' => $chat]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function message(MessageRequest $request, $id)
     {
-        //
+        $data = $request->except('_method', '_token');
+        $user_id = Auth::id();
+
+        Message::create([
+            'text' => $data['msg'],
+            'user_id' => $user_id,
+            'chat_id' => $id
+        ]);
+
+        return redirect()->route('chats.show', ['chat' => $id]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //

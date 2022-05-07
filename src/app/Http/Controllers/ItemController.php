@@ -60,6 +60,7 @@ class ItemController extends Controller
          'user_id' => auth()->user()->getAuthIdentifier(),
          'avatar_path' => $path
          ]);
+
         return redirect()->route('profile');
     }
 

@@ -58,10 +58,12 @@ Route::group([
     Route::get('/', [ChatController::class, 'index'])->name('index');
     Route::get('/create', [ChatController::class, 'create'])->name('create');
     Route::post('/', [ChatController::class, 'store'])->name('store');
-    Route::get('/{chat}', [ChatController::class, 'show'])->name('show');
+    Route::get('/{chat}', [ChatController::class, 'show'])->name('show')->middleware('chat');
     Route::get('/{chat}/edit', [ChatController::class, 'edit'])->name('edit');
-    Route::put('/{chat}', [ChatController::class, 'update'])->name('update');
+    //Route::put('/{chat}', [ChatController::class, 'update'])->name('update');
     Route::delete('/{chat}', [ChatController::class, 'destroy'])->name('destroy');
+    Route::post('/', [ChatController::class, 'check'])->name('check');
+    Route::put('/{chat}', [ChatController::class, 'message'])->name('message')->middleware('chat');
 });
 
 Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');

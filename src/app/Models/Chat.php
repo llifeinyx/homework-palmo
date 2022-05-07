@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use http\Message;
+use App\Models\Message;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,5 +25,8 @@ class Chat extends Model
     }
     public function message(){
         return $this->hasMany(Message::class, 'chat_id');
+    }
+    public function user(){
+        return $this->belongsToMany(User::class, 'chat_users');
     }
 }

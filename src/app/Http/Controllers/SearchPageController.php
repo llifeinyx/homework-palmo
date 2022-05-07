@@ -26,13 +26,13 @@ class SearchPageController extends Controller
         $data = $request->except('_token', '_method');
         $items = Item::query();
         $items->join('users', 'items.user_id', '=', 'users.id')->orderBy('users.vip_status', 'desc');
-
+        //dd($items->get());
         $categories = Category::all();
 
         //name filter
         if ($data['inputNameItem'] !== NULL){
             $queryBladeName = '%'.$data['inputNameItem'].'%';
-            $items->where('name', 'like', $queryBladeName);
+            $items->where('items.name', 'like', $queryBladeName);
         }
 
         //category filter
