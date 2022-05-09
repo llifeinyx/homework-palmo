@@ -1,10 +1,41 @@
-.header-container{
-    display: flex;
+body {
+    background-color: #f2f3f4;
 }
-.header-logo img{
-    width: 15%;
-    height: 15%;
+.carousel-container {
+    margin: 25px auto;
+    width: 90%;
 }
-button{
-    background-color: red;
+.carousel-slide {
+    position: relative;
+    max-width:100%;
+    max-height: 60vh;
+    object-fit: cover;
+}
+.carousel-slide input {
+    background: none;
+    border: none;
+    text-shadow: 5px 5px 10px black;
+    font-size: 84px;
+    font-weight: 700;
+    font-family: "Roboto", sans-serif;
+    color: #f2f3f4;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.45);
+    background-size: 80% 80%;
+    border-radius: 30px;
+}
+.main-info {
+    font-family: "Roboto", sans-serif;
+}
+.main-info h1{
+    margin: 0 auto;
+    font-size: 50px;
+}
+.container-about-us {
+    margin-top: 50px;
+    padding-top: 50px;
+    border-bottom: #000 2px solid;
+    border-radius: 30px;
 }

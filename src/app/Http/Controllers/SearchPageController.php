@@ -26,8 +26,17 @@ class SearchPageController extends Controller
         $data = $request->except('_token', '_method');
         $items = Item::query();
         $items->join('users', 'items.user_id', '=', 'users.id')->orderBy('users.vip_status', 'desc');
-        //dd($items->get());
         $categories = Category::all();
+
+        //if categories from main page
+        if(count($data) === 1){
+            foreach ($categories as $category){
+                if(!isset($data['checkBoxCategoryId'.$category->id])){
+                    $items->where('category_id', '!=', $category->id);
+                }
+            }
+            goto show_items;
+        }
 
         //name filter
         if ($data['inputNameItem'] !== NULL){
@@ -49,6 +58,8 @@ class SearchPageController extends Controller
         $items->where('cost', '>=', $data['rangeItemCostMin']);
         //max
         $items->where('cost', '<=', $data['rangeItemCostMax']);
+
+        show_items:
 
         $minCost = Item::all()->min('cost');
         $maxCost = Item::all()->max('cost');

@@ -13,7 +13,17 @@
             </div>
             <div class="col m-3" style="background: #cdedfa;">
                 <div class="row">
-                    <li class="list-group-item active">Chat with {{$chat->user->where('id', '!=', \Illuminate\Support\Facades\Auth::id())->first()->name}}</li>
+                    <li class="d-flex align-items-top justify-content-between list-group-item active">
+                        <span class="m-2">Chat with {{$chat->user->where('id', '!=', \Illuminate\Support\Facades\Auth::id())->first()->name}}</span>
+                        <span class="d-flex align-items-end">
+                                                            <form action="{{ route('chats.destroy', ['chat' => $chat->id]) }}" method="POST">
+                                @csrf
+                                                                @method('DELETE')
+                                <input type="submit" class="btn btn-danger" value="Delete">
+                            </form>
+                                <span class="ms-2" style="font-size: 12px;max-width: 144px;color: #ffa95f">#chat will be permanently deleted from both sides</span>
+                        </span>
+                    </li>
                 </div>
                 <div class="row mt-3">
                     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">

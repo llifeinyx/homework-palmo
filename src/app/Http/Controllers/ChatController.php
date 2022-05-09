@@ -126,10 +126,25 @@ class ChatController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        $chat = Chat::find($id);
+        $messages = $chat->message;
+        $users = $chat->user;
+
+        //delete all messages from chat
+        foreach ($messages as $message){
+            $message->delete();
+        }
+
+        //delete relations with users
+        $chat->user()->detach($users);
+
+        //delete chat
+        $chat->delete();
+
+        return redirect()->route('chats.index');
     }
 }

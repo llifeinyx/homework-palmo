@@ -61,7 +61,7 @@ Route::group([
     Route::get('/{chat}', [ChatController::class, 'show'])->name('show')->middleware('chat');
     Route::get('/{chat}/edit', [ChatController::class, 'edit'])->name('edit');
     //Route::put('/{chat}', [ChatController::class, 'update'])->name('update');
-    Route::delete('/{chat}', [ChatController::class, 'destroy'])->name('destroy');
+    Route::delete('/{chat}', [ChatController::class, 'destroy'])->name('destroy')->middleware('chat');
     Route::post('/', [ChatController::class, 'check'])->name('check');
     Route::put('/{chat}', [ChatController::class, 'message'])->name('message')->middleware('chat');
 });
