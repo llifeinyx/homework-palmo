@@ -32,7 +32,7 @@ Route::delete('/selected_items/{item}', [SelectedItemController::class, 'destroy
 Route::group([
     'as' => 'forms.',
     'prefix' => 'forms',
-    'middleware' => ['auth']
+    'middleware' => ['auth', 'ban']
 ], function () {
     Route::get('/', [FormController::class, 'index'])->name('index');
     Route::post('/', [FormController::class, 'store'])->name('store')->middleware('form:store');

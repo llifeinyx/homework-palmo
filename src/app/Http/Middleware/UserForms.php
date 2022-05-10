@@ -19,7 +19,7 @@ class UserForms
     }
 
     //verification amount forms (must be <5)
-    public function checkAmountForms(Request $request)
+    private function checkAmountForms(Request $request)
     {
         if ($this->user->form->count() >= 5){
             return redirect()->route('forms.index');
@@ -27,7 +27,7 @@ class UserForms
         return false;
     }
 
-    public function checkPrivacyImages(Request $request)
+    private function checkPrivacyImages(Request $request, $form)
     {
         $input = $request->input('image');
 
@@ -39,11 +39,21 @@ class UserForms
             }
         }
 
-        $test = $images->find($input);
-
+        //check privacy images
         if ($images->find($input)->count() !== count($input)){
             return redirect()->back();
         }
+
+        $files = $request['inputFiles'];
+        $form_files = $form->images;
+
+        $count = $form_files->count() - count($request->input('image'));
+
+        if ($count === 0 && $files === null)
+        {
+            return redirect()->back();
+        }
+
         return false;
     }
 
@@ -69,7 +79,7 @@ class UserForms
             }
 
             if ($role === 'update' && $request->input('image') != NULL){
-                $result = $this->checkPrivacyImages($request);
+                $result = $this->checkPrivacyImages($request, $form);
                 if ($result){
                     return $result;
                 }
