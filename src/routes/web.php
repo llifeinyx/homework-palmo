@@ -36,7 +36,6 @@ Route::group([
 ], function () {
     Route::get('/', [FormController::class, 'index'])->name('index');
     Route::post('/', [FormController::class, 'store'])->name('store')->middleware('form:store');
-    Route::get('/{form}', [FormController::class, 'show'])->name('show');
     Route::get('/{form}/edit', [FormController::class, 'edit'])->name('edit')->middleware('form:edit');
     Route::put('/{form}', [FormController::class, 'update'])->name('update')->middleware('form:update');
     Route::delete('/{form}', [FormController::class, 'destroy'])->name('destroy')->middleware('form:destroy');

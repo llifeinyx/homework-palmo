@@ -38,6 +38,27 @@ class FormRepository
         $form->delete();
     }
 
+    public function update(FormsRequest $request, $id, $images)
+    {
+        $data = $request->except(['_method', '_token']);
+        $form = $this->query()->find($id);
+
+        $form->update([
+           'name' => $data['inputName'],
+           'description' => $data['inputDescription']
+        ]);
+
+        if (isset($data['image'])){
+            $imgs = $form->images()->find($data['image']);
+            $form->images()->detach($imgs);
+            foreach ($imgs as $image){
+                $image->delete();
+            }
+        }
+
+        $form->images()->attach(Image::find($images));
+    }
+
     public function store(FormsRequest $request, $images)
     {
         $data = $request->except('_token', '_method', 'inputFiles');

@@ -44,7 +44,9 @@ class FormController extends Controller
 
     public function update(FormsRequest $request, $id)
     {
-        dd($request);
+        $this->service->update($request, $id);
+
+        return redirect()->route('forms.edit', ['form' => $id]);
     }
 
     public function destroy($id)

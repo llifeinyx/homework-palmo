@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use App\Models\Form;
+use App\Models\Image;
 use Closure;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,6 +23,26 @@ class UserForms
     {
         if ($this->user->form->count() >= 5){
             return redirect()->route('forms.index');
+        }
+        return false;
+    }
+
+    public function checkPrivacyImages(Request $request)
+    {
+        $input = $request->input('image');
+
+        $images = Collection::make();
+
+        foreach ($this->user->form as $form){
+            foreach ($form->images as $image){
+                $images->push($image);
+            }
+        }
+
+        $test = $images->find($input);
+
+        if ($images->find($input)->count() !== count($input)){
+            return redirect()->back();
         }
         return false;
     }
@@ -46,12 +68,13 @@ class UserForms
                 return redirect()->route('forms.index');
             }
 
-            if ($role === 'update'){
-
+            if ($role === 'update' && $request->input('image') != NULL){
+                $result = $this->checkPrivacyImages($request);
+                if ($result){
+                    return $result;
+                }
             }
         }
-
-
 
 
         return $next($request);

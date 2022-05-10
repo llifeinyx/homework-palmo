@@ -24,9 +24,15 @@ class FormsRequest extends FormRequest
      */
     public function rules()
     {
+        $rule = 'required|array';
+        if ($this->request->get('_method') === 'PUT'){
+            $rule = 'array';
+        }
+
         return [
             'inputName' => 'required|string|max:50',
             'inputDescription' => 'required|string|max:300',
+            'inputFiles' => $rule,
             'inputFiles.*' => 'required|image|file',
             'image' => 'array',
             'image.*' => 'integer|min:0',

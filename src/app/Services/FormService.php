@@ -19,23 +19,8 @@ class FormService
         $this->repository = $repository;
     }
 
-    public function index()
+    private function fileTreatment($files)
     {
-        return $this->repository->index();
-    }
-
-    public function destroy($id){
-        $this->repository->destroy($id);
-    }
-
-    public function userForms(){
-        $user = User::find(Auth::id());
-        return $user->form;
-    }
-
-    public function store(FormsRequest $request)
-    {
-        $files = $request['inputFiles'];
         $images = [];
         foreach ($files as $file){
             $path = FileHelperFacade::saveFile($file, 'avatars');
@@ -44,6 +29,42 @@ class FormService
             ]);
             array_push($images, $image->id);
         }
+        return $images;
+    }
+
+    public function index()
+    {
+        return $this->repository->index();
+    }
+
+    public function destroy($id)
+    {
+        $this->repository->destroy($id);
+    }
+
+    public function userForms()
+    {
+        $user = User::find(Auth::id());
+        return $user->form;
+    }
+
+    public function update(FormsRequest $request, $id)
+    {
+        $images = null;
+
+        $files = $request['inputFiles'];
+        if (isset($files)){
+            $images = $this->fileTreatment($files);
+        }
+        $this->repository->update($request, $id, $images);
+    }
+
+    public function store(FormsRequest $request)
+    {
+        $files = $request['inputFiles'];
+
+        $images = $this->fileTreatment($files);
+
         $this->repository->store($request,$images); // сохранили запись в БД
     }
 }
