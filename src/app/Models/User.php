@@ -62,4 +62,8 @@ class User extends Authenticatable
     public function message(){
         return $this->hasMany(Message::class);
     }
+    public function form(){
+        return $this->hasMany(Form::class);
+    }
+
 }

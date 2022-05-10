@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="container">
+        <div class="row p-4">
+            <div class="col alert alert-info">
+                <span>Hello! We figured out how to improve the search for products.</span>
+                <a href="{{route('forms.index')}}">Try smart form now</a>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <ul class="list-group">

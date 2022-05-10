@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\UserChat;
+use App\Http\Middleware\UserForms;
 use App\Http\Middleware\UserIsBanned;
 use App\Http\Middleware\UserRoleIsAdmin;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -57,6 +58,7 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
+        'form' => UserForms::class,
         'chat' => UserChat::class,
         'ban' => \App\Http\Middleware\UserIsBanned::class,
         'admin' => \App\Http\Middleware\UserRoleIsAdmin::class,

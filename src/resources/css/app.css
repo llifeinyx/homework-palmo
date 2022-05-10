@@ -39,3 +39,14 @@ body {
     border-bottom: #000 2px solid;
     border-radius: 30px;
 }
+.form-slide {
+    margin: 0 auto;
+    position: relative;
+    width: 300px;
+    height: 150px;
+    object-fit: cover;
+}
+.form-description {
+    word-wrap: break-word;
+}
+
