@@ -16,8 +16,8 @@ class ItemController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('ban');
+        //$this->middleware('auth');
+        //$this->middleware('ban');
     }
     /**
      * Display a listing of the resource.
@@ -72,10 +72,19 @@ class ItemController extends Controller
      */
     public function show($id): View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
+        $user = [];
         $item = Item::find($id);
-        $user = Auth::user();
 
-        return view('items.show', ['role' => $user->role->name, 'item' => $item, 'userId' => $user->id]);
+        if (Auth::check()){
+            $tempUser = Auth::user();
+            $user['role'] = $tempUser->role->name;
+            $user['userId'] = $tempUser->id;
+        }
+
+        return view('items.show', array_merge(['item' => $item], $user));
+
+
+        //return view('items.show', ['role' => $user['role'], 'item' => $item, 'userId' => $user['id']]);
     }
 
     /**

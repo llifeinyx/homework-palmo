@@ -34,7 +34,6 @@ class FormController extends Controller
 
         return redirect()->route('forms.index');
     }
-
     public function edit($id)
     {
         $form = $this->service->index()->find($id);
@@ -55,3 +54,4 @@ class FormController extends Controller
         return redirect()->route('forms.index');
     }
 }
+

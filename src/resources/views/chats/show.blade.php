@@ -46,7 +46,7 @@
 {{--                    <ul class="list-group" style="flex-direction: column-reverse;">--}}
                     @foreach($chat->message->reverse() as $message)
                         <div class="d-flex @if($message->user->id == \Illuminate\Support\Facades\Auth::id()){{'flex-row'}}@else{{'flex-row-reverse'}}@endif">
-                            <li class="list-group-item p-2 m-2" style="max-width: 60%;word-wrap: anywhere;border-radius: 10px; background: #fff"><p style="font-size: 13px;color: #4a5568">{{$message->user->name}}</p> {{$message->text}}</li>
+                            <li class="list-group-item p-2 m-2" style="white-space: pre-wrap;word-wrap: break-word;max-width: 60%;border-radius: 10px; background: #fff"><p style="font-size: 13px;color: #4a5568">{{$message->user->name}}</p> {{$message->text}}</li>
                         </div>
                     @endforeach
 {{--                    </ul>--}}

@@ -64,8 +64,8 @@ class FormRepository
         $data = $request->except('_token', '_method', 'inputFiles');
         $form = $this->query()->create([
            'name' => $data['inputName'],
-            'description' => $data['inputDescription'],
-            'user_id' => Auth::id(),
+           'description' => $data['inputDescription'],
+           'user_id' => Auth::id(),
         ]);
 
         $form->images()->attach(Image::find($images));

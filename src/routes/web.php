@@ -41,15 +41,17 @@ Route::group([
     Route::delete('/{form}', [FormController::class, 'destroy'])->name('destroy')->middleware('form:destroy');
 });
 
+// ITEMS ROUTES GROUP
+
 Route::group([
     'as' => 'items.',
     'prefix' => 'items',
-    'middleware' => 'auth'
+    'middleware' => ['auth', 'ban']
 ], function () {
     Route::get('/', [ItemController::class, 'index'])->name('index');
     Route::get('/create', [ItemController::class, 'create'])->name('create');
     Route::post('/', [ItemController::class, 'store'])->name('store');
-    Route::get('/{item}', [ItemController::class, 'show'])->name('show');
+    Route::get('/{item}', [ItemController::class, 'show'])->name('show')->withoutMiddleware(['auth', 'ban']);
     Route::get('/{item}/edit', [ItemController::class, 'edit'])->name('edit');
     Route::put('/{item}', [ItemController::class, 'update'])->name('update');
     Route::delete('/{item}', [ItemController::class, 'destroy'])->name('destroy');

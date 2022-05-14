@@ -37,7 +37,9 @@
                         </div>
                     </div>
                     <div class="row">
+                        @auth
                         <div class="col">
+
                             @if($userId !== $item->user_id)
                                 <a class="btn btn-primary" href="{{route('selected_items.index', ['item' => $item->id])}}">Add to cart</a>
                             @endif
@@ -51,6 +53,7 @@
                                 </form>
                             @endif
                         </div>
+                        @endauth
                     </div>
                 </div>
             </div>
