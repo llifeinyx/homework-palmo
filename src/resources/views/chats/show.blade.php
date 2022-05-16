@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="container">
+    <div id="app" class="container">
         <div class="row">
             <div class="col-4 m-3">
                 <ul class="list-group">
@@ -16,12 +16,12 @@
                     <li class="d-flex align-items-top justify-content-between list-group-item active">
                         <span class="m-2">Chat with {{$chat->user->where('id', '!=', \Illuminate\Support\Facades\Auth::id())->first()->name}}</span>
                         <span class="d-flex align-items-end">
-                                                            <form action="{{ route('chats.destroy', ['chat' => $chat->id]) }}" method="POST">
-                                @csrf
-                                                                @method('DELETE')
-                                <input type="submit" class="btn btn-danger" value="Delete">
-                            </form>
-                                <span class="ms-2" style="font-size: 12px;max-width: 144px;color: #ffa95f">#chat will be permanently deleted from both sides</span>
+                        <form action="{{ route('chats.destroy', ['chat' => $chat->id]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <input type="submit" class="btn btn-danger" value="Delete">
+                        </form>
+                        <span class="ms-2" style="font-size: 12px;max-width: 144px;color: #ffa95f">#chat will be permanently deleted from both sides</span>
                         </span>
                     </li>
                 </div>
@@ -42,15 +42,14 @@
                         Do not share your password with anyone!
                     </div>
                 </div>
-                <div tabindex="0" class="" style="display:flex;flex-direction: column-reverse;height: 30rem; position: relative; overflow: auto;">
-{{--                    <ul class="list-group" style="flex-direction: column-reverse;">--}}
-                    @foreach($chat->message->reverse() as $message)
-                        <div class="d-flex @if($message->user->id == \Illuminate\Support\Facades\Auth::id()){{'flex-row'}}@else{{'flex-row-reverse'}}@endif">
-                            <li class="list-group-item p-2 m-2" style="white-space: pre-wrap;word-wrap: break-word;max-width: 60%;border-radius: 10px; background: #fff"><p style="font-size: 13px;color: #4a5568">{{$message->user->name}}</p> {{$message->text}}</li>
-                        </div>
-                    @endforeach
-{{--                    </ul>--}}
-                </div>
+                <message-component v-bind:messages="{{json_encode($messages)}}"></message-component>
+{{--                <div id="messages" tabindex="0" class="" style="display:flex;flex-direction: column-reverse;height: 30rem; position: relative; overflow: auto;">--}}
+{{--                    @foreach($chat->message->reverse() as $message)--}}
+{{--                        <div class="d-flex @if($message->user->id == \Illuminate\Support\Facades\Auth::id()){{'flex-row'}}@else{{'flex-row-reverse'}}@endif">--}}
+{{--                            <li class="list-group-item p-2 m-2" style="white-space: pre-wrap;word-wrap: break-word;max-width: 60%;border-radius: 10px; background: #fff"><p style="font-size: 13px;color: #4a5568">{{$message->user->name}}</p> {{$message->text}}</li>--}}
+{{--                        </div>--}}
+{{--                    @endforeach--}}
+{{--                </div>--}}
                 <div class="row">
                     <form enctype="multipart/form-data" name="msgForm" id="msgForm" method="post" action="{{route('chats.message', ['chat' => $chat->id])}}" class="input-group mb-3">
                         @csrf

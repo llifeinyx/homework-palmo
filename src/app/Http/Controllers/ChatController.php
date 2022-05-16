@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageNotification;
 use App\Http\Requests\MessageRequest;
 use App\Models\Chat;
 use App\Models\Message;
@@ -100,7 +101,16 @@ class ChatController extends Controller
         $user = User::find(Auth::id());
         $chat = Chat::find($id);
 
-        return view('chats.show', ['user' => $chat->user->where('id', '!=', $user->id),'chats' => $user->chat, 'id' => $id, 'chat' => $chat]);
+        $messages = $chat->message;
+
+        $messagesArray = $messages->toArray();
+
+        foreach ($messagesArray as &$message){
+            $messageEloqument = $messages->find($message['id']);
+            $message['username'] = $messageEloqument->user->name;
+            $message['observerId'] = Auth::id();
+        }
+        return view('chats.show', ['messages' => $messagesArray, 'user' => $chat->user->where('id', '!=', $user->id),'chats' => $user->chat, 'id' => $id, 'chat' => $chat]);
     }
 
     public function message(MessageRequest $request, $id)
@@ -108,11 +118,15 @@ class ChatController extends Controller
         $data = $request->except('_method', '_token');
         $user_id = Auth::id();
 
-        Message::create([
+        $message = Message::create([
             'text' => $data['msg'],
             'user_id' => $user_id,
             'chat_id' => $id
         ]);
+
+        //event for pusher
+        $observer = $message->chat->user->where('id', '!=', $user_id);
+        event(new MessageNotification($message, $observer->first()->id));
 
         return redirect()->route('chats.show', ['chat' => $id]);
     }
