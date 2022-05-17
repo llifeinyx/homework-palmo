@@ -42,7 +42,7 @@
                         Do not share your password with anyone!
                     </div>
                 </div>
-                <message-component v-bind:messages="{{json_encode($messages)}}"></message-component>
+                <message-component v-bind:chat_id="{{$chat->id}}" v-bind:messages="{{json_encode($messages)}}"></message-component>
 {{--                <div id="messages" tabindex="0" class="" style="display:flex;flex-direction: column-reverse;height: 30rem; position: relative; overflow: auto;">--}}
 {{--                    @foreach($chat->message->reverse() as $message)--}}
 {{--                        <div class="d-flex @if($message->user->id == \Illuminate\Support\Facades\Auth::id()){{'flex-row'}}@else{{'flex-row-reverse'}}@endif">--}}

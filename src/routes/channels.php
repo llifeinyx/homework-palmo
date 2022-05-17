@@ -24,6 +24,8 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 //    }
 //    return true;
 //});
-Broadcast::channel('notification', function () {
-    return true;
+Broadcast::channel('notification.{id}', function ($user, $id) {
+    if ($user->chat->find($id) !== null){
+        return true;
+    }
 });

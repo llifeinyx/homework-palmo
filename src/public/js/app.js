@@ -5383,9 +5383,8 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    Echo.channel('notification').listen('MessageNotification', function (e) {
-      console.log(_this.messages); //console.log(e);
-
+    Echo["private"]('notification.' + this.chat_id).listen('MessageNotification', function (e) {
+      //console.log('notification.'+this.chat_id);
       _this.addMsg(e.message, e.observerId);
     });
   },
@@ -5394,18 +5393,16 @@ __webpack_require__.r(__webpack_exports__);
       todos: this.messages
     };
   },
-  props: ['messages'],
+  props: ['messages', 'chat_id'],
   beforeMount: function beforeMount() {
     this.todos.forEach(function (message) {
       if (message.user_id !== message.observerId) {
         message.reverse = true;
       } else {
         message.reverse = false;
-      }
+      } //console.log(message);
 
-      console.log(message);
     });
-    console.log(this.todos);
   },
   methods: {
     addMsg: function addMsg(message, observerId) {
@@ -5418,8 +5415,8 @@ __webpack_require__.r(__webpack_exports__);
         message.reverse = 'true';
       }
 
-      msg.username = message.user.name;
-      console.log(msg.reverse);
+      msg.username = message.user.name; //console.log(msg.reverse);
+
       this.todos.push(msg);
     }
   }

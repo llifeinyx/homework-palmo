@@ -12,10 +12,9 @@
 <script>
 export default {
     created(){
-        Echo.channel('notification')
+        Echo.private('notification.'+this.chat_id)
             .listen('MessageNotification', (e) => {
-                console.log(this.messages);
-                //console.log(e);
+                //console.log('notification.'+this.chat_id);
                 this.addMsg(e.message, e.observerId);
             })
     },
@@ -26,6 +25,7 @@ export default {
     },
     props: [
         'messages',
+        'chat_id',
     ],
     beforeMount() {
         this.todos.forEach((message) => {
@@ -34,9 +34,8 @@ export default {
           } else {
               message.reverse = false;
           }
-            console.log(message);
+            //console.log(message);
         })
-        console.log(this.todos);
     },
     methods: {
         addMsg: function (message, observerId){
@@ -48,7 +47,7 @@ export default {
                 message.reverse = 'true';
             }
             msg.username = message.user.name;
-            console.log(msg.reverse);
+            //console.log(msg.reverse);
             this.todos.push(msg);
         },
     }
