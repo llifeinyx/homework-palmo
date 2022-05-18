@@ -128,7 +128,8 @@ class ChatController extends Controller
         $observer = $message->chat->user->where('id', '!=', $user_id);
         event(new MessageNotification($message, $observer->first()->id));
 
-        return redirect()->route('chats.show', ['chat' => $id]);
+        return response()->json([$observer, $user_id]);
+        //return redirect()->route('chats.show', ['chat' => $id]);
     }
 
     public function update(Request $request, $id)

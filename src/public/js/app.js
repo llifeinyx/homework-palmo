@@ -5379,6 +5379,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   created: function created() {
     var _this = this;
@@ -5390,20 +5396,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      todos: this.messages
+      todos: this.messages,
+      msg: ''
     };
   },
-  props: ['messages', 'chat_id'],
-  beforeMount: function beforeMount() {
-    this.todos.forEach(function (message) {
-      if (message.user_id !== message.observerId) {
-        message.reverse = true;
-      } else {
-        message.reverse = false;
-      } //console.log(message);
-
-    });
-  },
+  props: ['messages', 'chat_id', 'user_id'],
   methods: {
     addMsg: function addMsg(message, observerId) {
       var msg = message;
@@ -5418,6 +5415,15 @@ __webpack_require__.r(__webpack_exports__);
       msg.username = message.user.name; //console.log(msg.reverse);
 
       this.todos.push(msg);
+    },
+    sendMessage: function sendMessage() {
+      axios.put('/chats/' + this.chat_id, {
+        msg: this.msg
+      }).then(function (response) {//console.log(response)
+      })["catch"](function (error) {
+        console.log(error);
+      });
+      this.msg = '';
     }
   }
 });
@@ -34453,7 +34459,7 @@ var render = function () {
           "div",
           {
             staticClass: "d-flex",
-            class: { "flex-row-reverse": message.reverse },
+            class: { "flex-row-reverse": message.user_id !== _vm.user_id },
           },
           [
             _c(
@@ -34482,6 +34488,56 @@ var render = function () {
       }),
       0
     ),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("label", { staticClass: "input-group mb-3" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.msg,
+              expression: "msg",
+            },
+          ],
+          staticClass: "form-control",
+          attrs: {
+            name: "msg",
+            id: "msg",
+            type: "text",
+            placeholder: "Enter message",
+            "aria-describedby": "button-addon2",
+          },
+          domProps: { value: _vm.msg },
+          on: {
+            keyup: function ($event) {
+              if (
+                !$event.type.indexOf("key") &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              return _vm.sendMessage.apply(null, arguments)
+            },
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.msg = $event.target.value
+            },
+          },
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-outline-secondary",
+            on: { click: _vm.sendMessage },
+          },
+          [_vm._v("Send message")]
+        ),
+      ]),
+    ]),
   ])
 }
 var staticRenderFns = []

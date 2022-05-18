@@ -96,10 +96,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//broadcasting event
-Route::get('/event', function (){
-    event(new MessageNotification('This test broadcast message'));
-});
 Route::get('/listen', function (){
     return view('listen');
 });
