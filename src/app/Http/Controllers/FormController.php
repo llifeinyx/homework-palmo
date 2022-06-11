@@ -18,12 +18,14 @@ class FormController extends Controller
 
     public function __construct(FormService $service)
     {
+        //$this->authorizeResource(Form::class, 'form');
         $this->service = $service;
     }
 
     public function index()
     {
         $forms = $this->service->userForms();
+
         return view('forms.index', ['forms' => $forms]);
     }
 
@@ -36,6 +38,8 @@ class FormController extends Controller
     }
     public function edit($id)
     {
+        $this->authorize('update', Form::find($id));
+
         $form = $this->service->index()->find($id);
 
         return view('forms.edit', ['form' => $form]);
@@ -43,6 +47,8 @@ class FormController extends Controller
 
     public function update(FormsRequest $request, $id)
     {
+        $this->authorize('update', Form::find($id));
+
         $this->service->update($request, $id);
 
         return redirect()->route('forms.edit', ['form' => $id]);
@@ -50,7 +56,10 @@ class FormController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('delete', Form::find($id));
+
         $this->service->destroy($id);
+
         return redirect()->route('forms.index');
     }
 }

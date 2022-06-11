@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\EmailVerificationJob;
+use App\Models\EmailVerification;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,11 +28,6 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
@@ -41,12 +40,7 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -65,7 +59,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'number' => $data['number'],
@@ -74,5 +68,19 @@ class RegisterController extends Controller
             'ban_status' => 'no',
             'vip_status' => 0
         ]);
+
+        $emailNotification = new EmailVerification();
+        $emailNotification->hash = Hash::make($data['email']);
+        $emailNotification->user_id = $user->id;
+        $emailNotification->save();
+
+        $url = url("/verification?" . 'id='.$emailNotification->id.'&hash='.$emailNotification->hash);
+
+        EmailVerificationJob::dispatch($data['email'], $data['name'], $url);
+
+        Cookie::queue(Cookie::make('PalmoEmailValidation', 'false'));
+
+        return $user;
+        //return null;
     }
 }

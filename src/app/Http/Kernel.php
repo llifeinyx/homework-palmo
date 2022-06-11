@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\RegisterVerification;
 use App\Http\Middleware\UserChat;
 use App\Http\Middleware\UserForms;
 use App\Http\Middleware\UserIsBanned;
@@ -62,6 +63,7 @@ class Kernel extends HttpKernel
         'chat' => UserChat::class,
         'ban' => \App\Http\Middleware\UserIsBanned::class,
         'admin' => \App\Http\Middleware\UserRoleIsAdmin::class,
+        'email' => RegisterVerification::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

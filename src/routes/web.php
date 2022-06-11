@@ -99,3 +99,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/listen', function (){
     return view('listen');
 });
+
+Route::get('/verification', [\App\Http\Controllers\EmailVerificationController::class, 'verification'])->name('verification');

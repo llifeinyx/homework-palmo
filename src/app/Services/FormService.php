@@ -5,10 +5,12 @@ namespace App\Services;
 
 use App\Facades\FileHelperFacade;
 use App\Http\Requests\FormsRequest;
+use App\Jobs\FormNotificationJob;
 use App\Models\Image;
 use App\Repositories\FormRepository;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class FormService
 {
@@ -66,5 +68,19 @@ class FormService
         $images = $this->fileTreatment($files);
 
         $this->repository->store($request,$images); // сохранили запись в БД
+
+//        Mail::send('emails.form', [], function ($message) {
+//            $message->to('sabaka@gmail.com', 'user')->subject('Smart form create!');
+//            $message->from('palmo.example@gmail.com', 'palmo');
+//        });
+
+        $user = Auth::user();
+
+        $dispatchInfo = [
+            'username' => $user->name,
+            'email' => $user->email
+        ];
+
+        FormNotificationJob::dispatch($dispatchInfo);
     }
 }
