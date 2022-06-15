@@ -33,7 +33,7 @@ class FormsRequest extends FormRequest
             'inputName' => 'required|string|max:50',
             'inputDescription' => 'required|string|max:300',
             'inputFiles' => $rule,
-            'inputFiles.*' => 'required|image|file|max:500',
+            'inputFiles.*' => 'required|image|file|max:1500',
             'image' => 'array',
             'image.*' => 'integer|min:0',
         ];

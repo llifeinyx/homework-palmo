@@ -5,7 +5,6 @@ namespace Illuminate\Foundation\Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Validation\ValidationException;
 
 trait AuthenticatesUsers
@@ -17,8 +16,6 @@ trait AuthenticatesUsers
      *
      * @return \Illuminate\View\View
      */
-
-
     public function showLoginForm()
     {
         return view('auth.login');
@@ -50,8 +47,10 @@ trait AuthenticatesUsers
             if ($request->hasSession()) {
                 $request->session()->put('auth.password_confirmed_at', time());
             }
+
             return $this->sendLoginResponse($request);
         }
+
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
@@ -84,14 +83,6 @@ trait AuthenticatesUsers
      */
     protected function attemptLogin(Request $request)
     {
-        $email = $request['email'];
-        $user = \App\Models\User::query()->where('email', '=', $email)->first();
-        if ($user !== null){
-            if ($user->emailVerification !== null){
-                return false;
-            }
-        }
-        Cookie::queue(Cookie::forget('PalmoEmailValidation'));
         return $this->guard()->attempt(
             $this->credentials($request), $request->filled('remember')
         );
@@ -125,8 +116,8 @@ trait AuthenticatesUsers
         }
 
         return $request->wantsJson()
-                    ? new JsonResponse([], 204)
-                    : redirect()->intended($this->redirectPath());
+            ? new JsonResponse([], 204)
+            : redirect()->intended($this->redirectPath());
     }
 
     /**
