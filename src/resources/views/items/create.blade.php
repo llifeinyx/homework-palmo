@@ -7,12 +7,12 @@
                 <legend>Create new item</legend>
                 <div class="form-group">
                     <label for="inputNameItem">Name item</label>
-                    <input required type="text" class="form-control @error('inputNameItem') is-invalid @enderror" name="inputNameItem" id="inputNameItem" placeholder="Enter name item">
+                    <input value="{{ old('inputNameItem') }}" required type="text" class="form-control @error('inputNameItem') is-invalid @enderror" name="inputNameItem" id="inputNameItem" placeholder="Enter name item">
                     <div class="invalid-feedback">@error('inputNameItem'){{$message}}@enderror</div>
                 </div>
                 <div class="form-group">
                     <label for="inputDescriptionItem">Description</label>
-                    <textarea required maxlength="400" minlength="50" placeholder="Minimum 50 characters" class="form-control @error('inputDescriptionItem') is-invalid @enderror" id="inputDescriptionItem" name="inputDescriptionItem" rows="3"></textarea>
+                    <textarea required maxlength="400" minlength="50" placeholder="Minimum 50 characters" class="form-control @error('inputDescriptionItem') is-invalid @enderror" id="inputDescriptionItem" name="inputDescriptionItem" rows="3">{{ old('inputDescriptionItem') }}</textarea>
                     <div class="invalid-feedback">@error('inputDescriptionItem'){{$message}}@enderror</div>
                 </div>
                 <div class="row">

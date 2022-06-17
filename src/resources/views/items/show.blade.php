@@ -37,6 +37,11 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col">
+                            <p class="card-text">Views: {{$item->views}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
                         @auth
                         <div class="col">
 

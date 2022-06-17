@@ -4,11 +4,17 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            @if((\Illuminate\Support\Facades\Cookie::get('PalmoEmailValidation')) !== null)
+
+            @if((\Illuminate\Support\Facades\Cookie::get('PalmoEmailValidation')) !== null && !isset($successAuth))
                 <div class="alert alert-info" role="alert">
                    Check your email, and do verification!
                 </div>
             @endif
+            @if(isset($successAuth))
+                    <div class="alert alert-info" role="alert">
+                        Success verification! Do login in.
+                    </div>
+                @endif
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 

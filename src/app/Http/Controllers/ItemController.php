@@ -74,12 +74,23 @@ class ItemController extends Controller
     {
         $user = [];
         $item = Item::find($id);
+        $viewBool = true;
 
         if (Auth::check()){
             $tempUser = Auth::user();
+            $usItems = $tempUser->item;
+                if($usItems->where('id', '=', $id)->first() !== null){
+                    $viewBool = false;
+                }
             $user['role'] = $tempUser->role->name;
             $user['userId'] = $tempUser->id;
         }
+        if($viewBool){
+            $views = $item->views;
+            $item->views = +$views + 1;
+        }
+
+        $item->save();
 
         return view('items.show', array_merge(['item' => $item], $user));
 

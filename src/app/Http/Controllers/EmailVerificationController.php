@@ -26,6 +26,6 @@ class EmailVerificationController extends Controller
 
         $emailVerification->delete();
 
-        return redirect()->route('login');
+        return view('auth.login', ['successAuth' => true]);
     }
 }
